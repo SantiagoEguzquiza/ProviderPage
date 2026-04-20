@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/react/Header.tsx';
+import Hero from '../components/Hero.astro';
+import TrustBanner from '../components/TrustBanner.astro';
+import FeatureBento from '../components/react/FeatureBento.tsx';
+import RoleTabs from '../components/react/RoleTabs.tsx';
+import TechSection from '../components/TechSection.astro';
+import Roadmap from '../components/Roadmap.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+	<Header client:load />
+	<main>
+		<Hero />
+		<TrustBanner />
+		<FeatureBento client:visible />
+		<RoleTabs client:visible />
+		<TechSection />
+		<Roadmap />
+		<CtaSection />
+	</main>
+	<Footer />
+</Layout>

@@ -1,0 +1,39 @@
+---
+import { finalCta } from '../data/site';
+---
+
+<section
+	id="cta"
+	class="scroll-mt-24 border-t border-[#e5e7eb] bg-white py-16 sm:py-20"
+	aria-labelledby="cta-heading"
+>
+	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+		<div
+			class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#1d4ed8] px-8 py-14 text-center shadow-[0_24px_64px_rgb(15_23_42/0.2)] sm:px-12"
+		>
+			<div class="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
+			<div class="pointer-events-none absolute -bottom-24 -left-16 size-56 rounded-full bg-indigo-500/30 blur-3xl" aria-hidden="true" />
+
+			<h2 id="cta-heading" class="relative text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+				{finalCta.title}
+			</h2>
+			<p class="relative mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-white/85">
+				{finalCta.text}
+			</p>
+			<div class="relative mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+				<a
+					href="mailto:hola@provider.app"
+					class="inline-flex w-full items-center justify-center rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-[#0f172a] shadow-sm transition hover:bg-[#f8fafc] sm:w-auto"
+				>
+					{finalCta.primary}
+				</a>
+				<a
+					href="mailto:dev@provider.app"
+					class="inline-flex w-full items-center justify-center rounded-xl border border-white/35 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white backdrop-blur transition hover:border-white/55 hover:bg-white/10 sm:w-auto"
+				>
+					{finalCta.secondary}
+				</a>
+			</div>
+		</div>
+	</div>
+</section>

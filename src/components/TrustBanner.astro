@@ -1,0 +1,18 @@
+---
+import { trust } from '../data/site';
+---
+
+<section class="border-y border-[#e5e7eb] bg-white py-10" aria-labelledby="trust-heading">
+	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+		<p id="trust-heading" class="text-center text-xs font-medium uppercase tracking-wider text-[#6b7280]">
+			{trust.headline}
+		</p>
+		<div class="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-60 grayscale">
+			{
+				trust.logos.map((name) => (
+					<span class="text-base font-semibold tracking-tight text-[#9ca3af] sm:text-lg">{name}</span>
+				))
+			}
+		</div>
+	</div>
+</section>
