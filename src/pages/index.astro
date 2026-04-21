@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/react/Header.tsx';
+import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import TrustBanner from '../components/TrustBanner.astro';
 import FeatureBento from '../components/react/FeatureBento.tsx';
@@ -12,15 +12,18 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
-	<Header client:load />
-	<main id="page-slider-root" class="relative h-[100dvh] w-full overflow-hidden">
+	<Header />
+	<main
+		id="page-slider-root"
+		class="relative h-[100dvh] w-full overflow-hidden bg-[#F8FAFC] transition-theme-colors dark:bg-[#262D33]"
+	>
 		<div
 			id="page-slider-track"
-			class="page-slider-track flex w-full flex-col will-change-transform"
+			class="page-slider-track flex w-full flex-col will-change-transform transition-theme-colors"
 		>
 			<div
 				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
 			>
 				<div class="flex min-h-0 flex-col">
 					<Hero />
@@ -30,17 +33,17 @@ import Footer from '../components/Footer.astro';
 
 			<div
 				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
 			>
 				<FeatureBento client:visible />
 			</div>
 
 			<div
 				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
 			>
 				<section
-					class="flex w-full min-h-[100dvh] flex-col justify-center gap-0 bg-white"
+					class="flex w-full min-h-[100dvh] flex-col justify-center gap-0 bg-white transition-theme-colors dark:bg-[#262D33]"
 					aria-label="Ciclo comercial y tecnología"
 				>
 					<TechSection />
@@ -50,17 +53,17 @@ import Footer from '../components/Footer.astro';
 
 			<div
 				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
 			>
 				<Roadmap />
 			</div>
 
 			<div
 				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
 			>
 				<section
-					class="flex min-h-[100dvh] flex-col justify-between bg-[#f8fafc]"
+					class="flex min-h-[100dvh] flex-col justify-between bg-[#f8fafc] transition-theme-colors dark:bg-[#262D33]"
 					aria-label="Contacto y pie de página"
 				>
 					<div class="flex flex-1 flex-col justify-center px-0 py-6 sm:py-8">

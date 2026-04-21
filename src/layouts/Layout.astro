@@ -16,6 +16,18 @@ const {
 <!doctype html>
 <html lang="es">
 	<head>
+		<script is:inline>
+			(() => {
+				try {
+					const k = 'provider-theme';
+					const s = localStorage.getItem(k);
+					const dark = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+					document.documentElement.classList.toggle('dark', dark);
+				} catch {
+					/* ignore */
+				}
+			})();
+		</script>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content={description} />
@@ -30,7 +42,7 @@ const {
 			rel="stylesheet"
 		/>
 	</head>
-	<body class="h-dvh overflow-hidden bg-[var(--color-surface)] text-[var(--color-ink-muted)]">
+	<body class="h-dvh overflow-hidden transition-theme-colors">
 		<slot />
 		<script is:inline>
 			(() => {

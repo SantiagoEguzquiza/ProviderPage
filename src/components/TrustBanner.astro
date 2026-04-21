@@ -3,18 +3,25 @@ import { trust } from '../data/site';
 ---
 
 <section
-	class="border-y border-[#154d6c]/10 bg-[#f8fafc] py-10"
+	class="border-y border-[#154d6c]/10 bg-[#f8fafc] py-10 transition-theme-colors dark:border-[#f8fafc]/10 dark:bg-[#2a3239]"
 	aria-labelledby="trust-heading"
 	data-scroll-reveal
 >
 	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-		<p id="trust-heading" class="text-center text-xs font-medium uppercase tracking-wider text-[#64748b]">
+		<p
+			id="trust-heading"
+			class="text-center text-xs font-medium uppercase tracking-wider text-[#64748b] transition-theme-colors dark:text-[#94a3b8]"
+		>
 			{trust.headline}
 		</p>
 		<div class="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-70 grayscale">
 			{
 				trust.logos.map((name) => (
-					<span class="text-base font-semibold tracking-tight text-[#94a3b8] sm:text-lg">{name}</span>
+					<span
+						class="text-base font-semibold tracking-tight text-[#94a3b8] transition-theme-colors dark:text-[#64748b] sm:text-lg"
+					>
+						{name}
+					</span>
 				))
 			}
 		</div>

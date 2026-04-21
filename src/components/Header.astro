@@ -1,0 +1,131 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { hero, nav, site } from '../data/site';
+---
+
+<header
+	id="site-header"
+	data-scrolled="false"
+	class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-[#f8fafc]/0 transition-[background-color,box-shadow,backdrop-filter,border-color] duration-300 dark:bg-[#262d33]/0 dark:backdrop-blur-0 data-[scrolled=true]:border-[#154d6c]/10 data-[scrolled=true]:bg-[#f8fafc]/95 data-[scrolled=true]:shadow-[0_1px_0_rgb(0_0_0/0.04)] data-[scrolled=true]:backdrop-blur-md dark:data-[scrolled=true]:border-[#f8fafc]/10 dark:data-[scrolled=true]:bg-[#262d33]/95"
+>
+	<div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+		<a href="#" class="text-lg font-semibold tracking-tight text-[#154d6c] transition-theme-colors dark:text-[#f8fafc]">
+			{site.name}
+		</a>
+
+		<div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+			<nav class="hidden items-center gap-8 md:flex" aria-label="Principal">
+				{
+					nav.map((item) => (
+						<a
+							href={item.href}
+							class="text-sm font-medium text-[#64748b] transition-theme-colors hover:text-[#154d6c] dark:text-[#94a3b8] dark:hover:text-[#f8fafc]"
+						>
+							{item.label}
+						</a>
+					))
+				}
+			</nav>
+
+			<ThemeToggle />
+
+			<a
+				href="#cta"
+				class="btn-primary-glow hidden rounded-lg bg-gradient-to-r from-[#154d6c] to-[#1cb5ac] px-4 py-2 text-sm font-semibold text-white transition-theme-colors hover:brightness-[1.05] md:inline-flex md:items-center md:justify-center"
+			>
+				{hero.ctaPrimary}
+			</a>
+
+			<button
+				type="button"
+				id="mobile-menu-btn"
+				class="inline-flex rounded-lg p-2 text-[#154d6c] transition-theme-colors dark:text-[#f8fafc] md:hidden"
+				aria-expanded="false"
+				aria-controls="mobile-nav"
+				aria-label="Abrir menú"
+			>
+				<svg class="icon-menu size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<line x1="4" x2="20" y1="12" y2="12"></line>
+					<line x1="4" x2="20" y1="6" y2="6"></line>
+					<line x1="4" x2="20" y1="18" y2="18"></line>
+				</svg>
+				<svg class="icon-close hidden size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M18 6 6 18"></path>
+					<path d="m6 6 12 12"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<div
+		id="mobile-nav"
+		class="hidden border-t border-[#154d6c]/10 bg-[#f8fafc] px-4 py-4 transition-theme-colors dark:border-[#f8fafc]/10 dark:bg-[#262d33] md:hidden"
+	>
+		<nav class="flex flex-col gap-3" aria-label="Móvil">
+			{
+				nav.map((item) => (
+					<a
+						href={item.href}
+						class="mobile-nav-link rounded-lg px-2 py-2 text-sm font-medium text-[#64748b] transition-theme-colors dark:text-[#94a3b8]"
+					>
+						{item.label}
+					</a>
+				))
+			}
+			<a
+				href="#cta"
+				class="btn-primary-glow mt-1 rounded-lg bg-gradient-to-r from-[#154d6c] to-[#1cb5ac] px-4 py-3 text-center text-sm font-semibold text-white hover:brightness-[1.05]"
+			>
+				{hero.ctaPrimary}
+			</a>
+		</nav>
+	</div>
+</header>
+
+<script>
+	const header = document.getElementById('site-header');
+	const menuBtn = document.getElementById('mobile-menu-btn');
+	const mobileNav = document.getElementById('mobile-nav');
+	const iconMenu = menuBtn?.querySelector('.icon-menu');
+	const iconClose = menuBtn?.querySelector('.icon-close');
+
+	function setScrolled(scrolled) {
+		header?.setAttribute('data-scrolled', String(scrolled));
+	}
+
+	function updateScrolledFromSlides() {
+		const slides = document.querySelectorAll('[data-page-slide]');
+		let scrolled = false;
+		slides.forEach((el) => {
+			if ((el instanceof HTMLElement ? el.scrollTop : 0) > 12) scrolled = true;
+		});
+		setScrolled(scrolled);
+	}
+
+	updateScrolledFromSlides();
+	document.querySelectorAll('[data-page-slide]').forEach((el) => {
+		if (el instanceof HTMLElement) {
+			el.addEventListener('scroll', updateScrolledFromSlides, { passive: true });
+		}
+	});
+
+	menuBtn?.addEventListener('click', () => {
+		const open = menuBtn.getAttribute('aria-expanded') === 'true';
+		const next = !open;
+		menuBtn.setAttribute('aria-expanded', String(next));
+		menuBtn.setAttribute('aria-label', next ? 'Cerrar menú' : 'Abrir menú');
+		mobileNav?.classList.toggle('hidden', !next);
+		iconMenu?.classList.toggle('hidden', next);
+		iconClose?.classList.toggle('hidden', !next);
+	});
+
+	mobileNav?.querySelectorAll('a').forEach((a) => {
+		a.addEventListener('click', () => {
+			menuBtn?.setAttribute('aria-expanded', 'false');
+			menuBtn?.setAttribute('aria-label', 'Abrir menú');
+			mobileNav?.classList.add('hidden');
+			iconMenu?.classList.remove('hidden');
+			iconClose?.classList.add('hidden');
+		});
+	});
+</script>

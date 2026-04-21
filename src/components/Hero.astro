@@ -1,19 +1,16 @@
 ---
-import { getImage } from 'astro:assets';
-import heroScreenshot from '../assets/screenshots/mainMenu_black.png';
 import { hero } from '../data/site';
-import DeviceMockup from './react/DeviceMockup';
 
-const optimizedHeroShot = await getImage({
-	src: heroScreenshot,
-	width: 1280,
-	height: 2856,
-	format: 'webp',
-	quality: 100,
-});
+const heroShotLight = hero.screenshotLight;
+const heroShotDark = hero.screenshotDark;
+const heroImgW = hero.screenshotWidth;
+const heroImgH = hero.screenshotHeight;
 ---
 
-<section class="relative overflow-hidden pt-24 pb-16 sm:pb-20 lg:pb-24 lg:pt-32" aria-labelledby="hero-title">
+<section
+	class="relative overflow-hidden bg-[#F8FAFC] pt-24 pb-16 transition-theme-colors sm:pb-20 lg:pb-24 lg:pt-32 dark:bg-[#262D33]"
+	aria-labelledby="hero-title"
+>
 	<!-- Mesh: teal / deep blue -->
 	<div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
 		<div
@@ -25,13 +22,15 @@ const optimizedHeroShot = await getImage({
 		<div
 			class="absolute bottom-[-20%] left-[25%] h-[min(70vw,420px)] w-[min(70vw,420px)] rounded-full bg-gradient-to-tr from-[#1cb5ac]/15 via-sky-100/20 to-transparent blur-[80px]"
 		/>
-		<div class="absolute inset-0 bg-gradient-to-b from-[#f8fafc]/0 via-[#f8fafc]/85 to-[#f8fafc]" />
+		<div
+			class="absolute inset-0 bg-gradient-to-b from-[#f8fafc]/0 via-[#f8fafc]/85 to-[#f8fafc] transition-theme-colors dark:from-[#262d33]/0 dark:via-[#262d33]/90 dark:to-[#262d33]"
+		/>
 	</div>
 
 	<div class="relative mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8">
 		<div>
 			<p
-				class="mb-4 inline-flex items-center rounded-full border border-[#154d6c]/15 bg-white/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#154d6c] shadow-[var(--shadow-soft)] backdrop-blur-md"
+				class="mb-4 inline-flex items-center rounded-full border border-[#154d6c]/15 bg-white/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#154d6c] shadow-[var(--shadow-soft)] backdrop-blur-md transition-theme-colors dark:border-[#f8fafc]/15 dark:bg-[#1e252b]/80 dark:text-[#f8fafc]"
 			>
 				{hero.badge}
 			</p>
@@ -41,7 +40,7 @@ const optimizedHeroShot = await getImage({
 			>
 				{hero.title}
 			</h1>
-			<p class="mt-6 text-lg leading-relaxed text-[#64748b]">
+			<p class="mt-6 text-lg leading-relaxed text-[#64748b] transition-theme-colors dark:text-[#94a3b8]">
 				{hero.subtitle}
 			</p>
 			<div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -53,7 +52,7 @@ const optimizedHeroShot = await getImage({
 				</a>
 				<a
 					href="#cta"
-					class="inline-flex items-center justify-center rounded-xl border border-[#154d6c]/20 bg-white/70 px-6 py-3 text-sm font-semibold text-[#154d6c] shadow-[var(--shadow-soft)] backdrop-blur-md transition duration-300 hover:border-[#154d6c]/35 hover:bg-white/95"
+					class="inline-flex items-center justify-center rounded-xl border border-[#154d6c]/20 bg-white/70 px-6 py-3 text-sm font-semibold text-[#154d6c] shadow-[var(--shadow-soft)] backdrop-blur-md transition duration-300 hover:border-[#154d6c]/35 hover:bg-white/95 dark:border-[#f8fafc]/20 dark:bg-[#1e252b]/80 dark:text-[#f8fafc] dark:hover:border-[#f8fafc]/35 dark:hover:bg-[#2a3239]/95"
 				>
 					{hero.ctaSecondary}
 				</a>
@@ -64,15 +63,35 @@ const optimizedHeroShot = await getImage({
 			<div class="absolute -left-6 -top-6 size-40 rounded-full bg-[#1cb5ac]/20 blur-3xl" aria-hidden="true" />
 			<div class="absolute -bottom-8 -right-4 size-48 rounded-full bg-[#154d6c]/15 blur-3xl" aria-hidden="true" />
 			<div class="phone-float relative flex justify-end">
-				<DeviceMockup
-					client:load
-					imageSrc={optimizedHeroShot.src}
-					alt="Captura del panel principal de la app Provider"
-					placeholderLabel="Provider"
-					loading="eager"
-					intrinsicWidth={optimizedHeroShot.attributes.width}
-					intrinsicHeight={optimizedHeroShot.attributes.height}
-				/>
+				<div
+					class="relative w-full max-w-[min(100%,280px)] shrink-0 sm:max-w-[min(100%,300px)]"
+					style={`aspect-ratio: ${heroImgW} / ${heroImgH}`}
+				>
+					<div class="absolute inset-0" role="img" aria-label="Captura del panel principal de la app Provider">
+						<!-- Light theme: white UI mockup; subtle lift on pale backgrounds -->
+						<img
+							class="device-screenshot-img absolute inset-0 h-full w-full object-contain object-center opacity-100 transition-theme-opacity motion-reduce:transition-none dark:opacity-0 drop-shadow-[0_12px_40px_-8px_rgb(21_77_108/0.18)]"
+							src={heroShotLight}
+							alt=""
+							width={heroImgW}
+							height={heroImgH}
+							loading="eager"
+							fetchpriority="high"
+							decoding="async"
+						/>
+						<!-- Dark theme: black UI mockup -->
+						<img
+							class="device-screenshot-img absolute inset-0 h-full w-full object-contain object-center opacity-0 transition-theme-opacity motion-reduce:transition-none dark:opacity-100"
+							src={heroShotDark}
+							alt=""
+							width={heroImgW}
+							height={heroImgH}
+							loading="eager"
+							fetchpriority="high"
+							decoding="async"
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

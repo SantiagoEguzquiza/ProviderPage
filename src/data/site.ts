@@ -21,8 +21,13 @@ export const hero = {
 		'Capacita a tus vendedores y repartidores con una app móvil potente. Gestiona ventas, inventario y clientes en tiempo real, incluso sin conexión a internet.',
 	ctaPrimary: 'Solicitar Demo',
 	ctaSecondary: 'Hablar con un asesor',
-	/** Same asset as `src/assets/screenshots/mainMenu_black.png` (Hero uses Astro `getImage` WebP from that file) */
-	screenshot: '/screenshots/mainMenu_black.png',
+	/** Hero: light theme — `public/screenshots/mainMenu_white.png` */
+	screenshotLight: '/screenshots/mainMenu_white.png',
+	/** Hero: dark theme — `public/screenshots/mainMenu_black.png` */
+	screenshotDark: '/screenshots/mainMenu_black.png',
+	/** Pixel size of both PNGs (same dimensions; update if assets change). */
+	screenshotWidth: 1459,
+	screenshotHeight: 3077,
 } as const;
 
 export const trust = {

@@ -1,0 +1,76 @@
+---
+const THEME_STORAGE_KEY = 'provider-theme';
+---
+
+<button
+	type="button"
+	id="theme-toggle"
+	class="group relative inline-flex h-9 w-14 shrink-0 cursor-pointer items-center rounded-full border border-[#154d6c]/15 bg-[#e2e8f0] p-0.5 shadow-inner transition-theme-switch focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1cb5ac] dark:border-[#1cb5ac]/40 dark:bg-[#1cb5ac] dark:shadow-[inset_0_1px_3px_rgb(0_0_0/0.2)]"
+	aria-label="Cambiar tema claro u oscuro"
+	aria-pressed="false"
+	data-theme-key={THEME_STORAGE_KEY}
+>
+	<span
+		class="pointer-events-none relative z-10 flex size-7 translate-x-0 items-center justify-center rounded-full bg-white shadow-md ring-1 ring-black/5 transition-theme-transform will-change-transform dark:translate-x-6"
+	>
+		<!-- Sun (light mode) -->
+		<svg
+			class="absolute size-3.5 text-amber-500 opacity-100 transition-theme-opacity dark:opacity-0"
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			aria-hidden="true"
+		>
+			<circle cx="12" cy="12" r="4"></circle>
+			<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+		</svg>
+		<!-- Moon (dark mode) -->
+		<svg
+			class="absolute size-3.5 text-[#154d6c] opacity-0 transition-theme-opacity dark:opacity-100 dark:text-[#0f172a]"
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			aria-hidden="true"
+		>
+			<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+		</svg>
+	</span>
+</button>
+
+<script define:vars={{ THEME_STORAGE_KEY }}>
+	(() => {
+		const root = document.documentElement;
+		const btn = document.getElementById('theme-toggle');
+		if (!btn) return;
+
+		function isDark() {
+			return root.classList.contains('dark');
+		}
+
+		function applyTheme(dark) {
+			root.classList.toggle('dark', dark);
+			try {
+				localStorage.setItem(THEME_STORAGE_KEY, dark ? 'dark' : 'light');
+			} catch {
+				/* ignore */
+			}
+			btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+		}
+
+		btn.addEventListener('click', () => applyTheme(!isDark()));
+
+		btn.setAttribute('aria-pressed', isDark() ? 'true' : 'false');
+	})();
+</script>
