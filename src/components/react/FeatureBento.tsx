@@ -1,3 +1,4 @@
+import type { CSSProperties, MouseEvent } from 'react';
 import { Cloud, LayoutDashboard, Package, Receipt, Users, WifiOff } from 'lucide-react';
 import { features } from '../../data/site';
 
@@ -10,28 +11,61 @@ const icons = {
 	'layout-dashboard': LayoutDashboard,
 } as const;
 
+function spotlightMove(e: MouseEvent<HTMLElement>) {
+	const el = e.currentTarget;
+	const r = el.getBoundingClientRect();
+	el.style.setProperty('--sx', `${e.clientX - r.left}px`);
+	el.style.setProperty('--sy', `${e.clientY - r.top}px`);
+}
+
 export default function FeatureBento() {
 	return (
-		<section id={features.id} aria-labelledby="features-heading" className="border-t border-[#e5e7eb] bg-[#f9fafb] py-20 sm:py-24">
-			<div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+		<section
+			id={features.id}
+			aria-labelledby="features-heading"
+			className="relative min-h-0 overflow-hidden border-t border-[#154d6c]/10 bg-[#f8fafc] py-20 sm:py-24"
+			data-scroll-reveal
+		>
+			<div
+				className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgb(28_181_172/0.12),transparent)]"
+				aria-hidden
+			/>
+			<div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl text-center">
-					<h2 id="features-heading" className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-4xl">
+					<h2
+						id="features-heading"
+						className="text-gradient-section text-3xl font-semibold tracking-tighter leading-tight text-balance sm:text-4xl"
+					>
 						{features.title}
 					</h2>
-					<p className="mt-4 text-lg leading-relaxed text-[#4b5563]">{features.subtitle}</p>
+					<p className="mt-4 text-lg leading-relaxed text-[#64748b]">{features.subtitle}</p>
 				</div>
 
 				<ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{features.items.map((item) => {
 						const Icon = icons[item.icon];
+						const spotlight: CSSProperties = {
+							background:
+								'radial-gradient(520px circle at var(--sx, 50%) var(--sy, 50%), rgb(28 181 172 / 0.1), transparent 42%)',
+						};
 						return (
 							<li key={item.id}>
-								<article className="group h-full rounded-2xl border border-[#e5e7eb]/80 bg-white p-6 shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_48px_rgb(15_23_42/0.08)]">
-									<div className="mb-4 inline-flex rounded-xl bg-[#eff6ff] p-3 text-[#1d4ed8] ring-1 ring-[#bfdbfe]/60">
-										<Icon className="size-6" strokeWidth={1.5} aria-hidden />
+								<article
+									className="group relative h-full overflow-hidden rounded-2xl border border-[#154d6c]/15 bg-white/60 p-6 shadow-[var(--shadow-card)] ring-1 ring-[#154d6c]/10 backdrop-blur-md backdrop-saturate-150 transition duration-500 ease-out hover:-translate-y-0.5 hover:border-[#154d6c]/25 hover:shadow-[0_24px_56px_rgb(21_77_108/0.08)]"
+									onMouseMove={spotlightMove}
+								>
+									<div
+										className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+										style={spotlight}
+										aria-hidden
+									/>
+									<div className="relative">
+										<div className="mb-4 inline-flex rounded-xl border border-[#154d6c]/12 bg-[#e6f7f5]/90 p-3 text-[#1cb5ac] shadow-sm backdrop-blur-sm">
+											<Icon className="size-6" strokeWidth={1.5} aria-hidden />
+										</div>
+										<h3 className="text-lg font-semibold tracking-tight text-[#154d6c]">{item.title}</h3>
+										<p className="mt-2 text-sm leading-relaxed text-[#64748b]">{item.text}</p>
 									</div>
-									<h3 className="text-lg font-semibold text-[#111827]">{item.title}</h3>
-									<p className="mt-2 text-sm leading-relaxed text-[#4b5563]">{item.text}</p>
 								</article>
 							</li>
 						);

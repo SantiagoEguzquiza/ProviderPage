@@ -4,14 +4,18 @@ import { techSection } from '../data/site';
 
 <section
 	id={techSection.id}
-	class="border-t border-[#e5e7eb] bg-white py-16 sm:py-20"
+	class="min-h-0 bg-white px-0 py-10 sm:py-12"
 	aria-labelledby="tech-heading"
+	data-scroll-reveal
 >
 	<div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-		<h2 id="tech-heading" class="text-2xl font-semibold tracking-tight text-[#111827] sm:text-3xl">
+		<h2
+			id="tech-heading"
+			class="text-gradient-section text-2xl font-semibold tracking-tighter leading-tight text-balance sm:text-3xl"
+		>
 			{techSection.title}
 		</h2>
-		<p class="mt-4 text-lg leading-relaxed text-[#4b5563]">
+		<p class="mt-4 text-lg leading-relaxed text-[#64748b]">
 			{techSection.body}
 		</p>
 	</div>

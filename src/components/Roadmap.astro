@@ -2,26 +2,34 @@
 import { roadmap } from '../data/site';
 ---
 
-<section id={roadmap.id} class="border-t border-[#e5e7eb] bg-[#f9fafb] py-20 sm:py-24" aria-labelledby="roadmap-heading">
+<section
+	id={roadmap.id}
+	class="min-h-0 border-t border-[#154d6c]/10 bg-[#f8fafc] py-20 sm:py-24"
+	aria-labelledby="roadmap-heading"
+	data-scroll-reveal
+>
 	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 		<div class="mx-auto max-w-2xl text-center">
-			<h2 id="roadmap-heading" class="text-3xl font-semibold tracking-tight text-[#111827] sm:text-4xl">
+			<h2
+				id="roadmap-heading"
+				class="text-gradient-section text-3xl font-semibold tracking-tighter leading-tight text-balance sm:text-4xl"
+			>
 				{roadmap.title}
 			</h2>
-			<p class="mt-4 text-lg leading-relaxed text-[#4b5563]">{roadmap.subtitle}</p>
+			<p class="mt-4 text-lg leading-relaxed text-[#64748b]">{roadmap.subtitle}</p>
 		</div>
 
-		<ol class="relative mx-auto mt-14 max-w-2xl border-l border-[#e5e7eb] pl-8">
+		<ol class="relative mx-auto mt-14 max-w-2xl border-l border-[#154d6c]/20 pl-8">
 			{
 				roadmap.items.map((item, i) => (
 					<li class="relative pb-10 last:pb-0">
 						<span
-							class="absolute -left-[39px] flex size-5 items-center justify-center rounded-full border-2 border-[#1d4ed8] bg-white shadow-sm"
+							class="absolute -left-[39px] flex size-5 items-center justify-center rounded-full border-2 border-[#1cb5ac] bg-white shadow-sm"
 							aria-hidden="true"
 						>
-							<span class="size-2 rounded-full bg-[#1d4ed8]" />
+							<span class="size-2 rounded-full bg-[#1cb5ac]" />
 						</span>
-						<p class="text-base font-medium leading-relaxed text-[#111827]">{item}</p>
+						<p class="text-base font-medium leading-relaxed text-[#154d6c]">{item}</p>
 					</li>
 				))
 			}

@@ -1,30 +1,59 @@
 ---
+import { getImage } from 'astro:assets';
+import heroScreenshot from '../assets/screenshots/mainMenu_black.png';
 import { hero } from '../data/site';
+import DeviceMockup from './react/DeviceMockup';
+
+const optimizedHeroShot = await getImage({
+	src: heroScreenshot,
+	width: 1280,
+	height: 2856,
+	format: 'webp',
+	quality: 100,
+});
 ---
 
 <section class="relative overflow-hidden pt-24 pb-16 sm:pb-20 lg:pb-24 lg:pt-32" aria-labelledby="hero-title">
-	<div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#eff6ff]/50 via-white to-white" />
+	<!-- Mesh: teal / deep blue -->
+	<div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+		<div
+			class="absolute -left-[20%] -top-[30%] h-[min(120vw,720px)] w-[min(120vw,720px)] rounded-full bg-gradient-to-br from-[#1cb5ac]/25 via-[#154d6c]/15 to-transparent blur-[100px]"
+		/>
+		<div
+			class="absolute -right-[15%] top-[10%] h-[min(90vw,520px)] w-[min(90vw,520px)] rounded-full bg-gradient-to-bl from-[#154d6c]/20 via-[#1cb5ac]/12 to-transparent blur-[90px]"
+		/>
+		<div
+			class="absolute bottom-[-20%] left-[25%] h-[min(70vw,420px)] w-[min(70vw,420px)] rounded-full bg-gradient-to-tr from-[#1cb5ac]/15 via-sky-100/20 to-transparent blur-[80px]"
+		/>
+		<div class="absolute inset-0 bg-gradient-to-b from-[#f8fafc]/0 via-[#f8fafc]/85 to-[#f8fafc]" />
+	</div>
+
 	<div class="relative mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8">
 		<div>
-			<p class="mb-4 inline-flex items-center rounded-full border border-[#e5e7eb] bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#1d4ed8] shadow-sm backdrop-blur">
+			<p
+				class="mb-4 inline-flex items-center rounded-full border border-[#154d6c]/15 bg-white/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#154d6c] shadow-[var(--shadow-soft)] backdrop-blur-md"
+			>
 				{hero.badge}
 			</p>
-			<h1 id="hero-title" class="text-4xl font-semibold tracking-tight text-[#111827] sm:text-5xl sm:leading-[1.1]">
+			<h1
+				id="hero-title"
+				class="text-gradient-hero text-4xl font-semibold tracking-tighter leading-tight text-balance sm:text-5xl sm:leading-[1.08]"
+			>
 				{hero.title}
 			</h1>
-			<p class="mt-6 text-lg leading-relaxed text-[#4b5563]">
+			<p class="mt-6 text-lg leading-relaxed text-[#64748b]">
 				{hero.subtitle}
 			</p>
 			<div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
 				<a
 					href="#cta"
-					class="inline-flex items-center justify-center rounded-xl bg-[#1d4ed8] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1e40af]"
+					class="btn-primary-glow inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#154d6c] to-[#1cb5ac] px-6 py-3 text-sm font-semibold text-white hover:brightness-[1.05]"
 				>
 					{hero.ctaPrimary}
 				</a>
 				<a
 					href="#cta"
-					class="inline-flex items-center justify-center rounded-xl border border-[#d1d5db] bg-white px-6 py-3 text-sm font-semibold text-[#111827] shadow-sm transition hover:border-[#9ca3af] hover:bg-[#f9fafb]"
+					class="inline-flex items-center justify-center rounded-xl border border-[#154d6c]/20 bg-white/70 px-6 py-3 text-sm font-semibold text-[#154d6c] shadow-[var(--shadow-soft)] backdrop-blur-md transition duration-300 hover:border-[#154d6c]/35 hover:bg-white/95"
 				>
 					{hero.ctaSecondary}
 				</a>
@@ -32,61 +61,41 @@ import { hero } from '../data/site';
 		</div>
 
 		<div class="relative mx-auto w-full max-w-sm lg:mx-0 lg:max-w-none lg:justify-self-end">
-			<div class="absolute -left-6 -top-6 size-40 rounded-full bg-blue-100/60 blur-3xl" aria-hidden="true" />
-			<div class="absolute -bottom-8 -right-4 size-48 rounded-full bg-indigo-100/50 blur-3xl" aria-hidden="true" />
-			<div
-				class="relative float-slow aspect-[9/18] w-full max-w-[280px] rounded-[2.35rem] border border-[#e5e7eb] bg-gradient-to-br from-[#f9fafb] to-white p-[11px] shadow-[0_32px_80px_rgb(15_23_42/0.12)] sm:max-w-[300px]"
-			>
-				<div class="absolute left-1/2 top-0 z-10 h-7 w-28 -translate-x-1/2 rounded-b-2xl bg-[#111827]/95" aria-hidden="true" />
-				<div
-					class="relative h-full overflow-hidden rounded-[1.9rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 ring-1 ring-white/10"
-				>
-					<div
-						class="flex h-11 items-center justify-between bg-gradient-to-r from-blue-600 to-indigo-600 px-4"
-					>
-						<span class="text-xs font-semibold tracking-wide text-white">Provider</span>
-						<span class="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-medium text-white/95">En línea</span>
-					</div>
-					<div class="space-y-4 p-4">
-						<div class="rounded-xl bg-white/10 p-3 ring-1 ring-white/10">
-							<div class="h-2 w-1/3 rounded bg-white/30" />
-							<div class="mt-3 h-2 w-full rounded bg-white/10" />
-							<div class="mt-2 h-2 w-5/6 rounded bg-white/10" />
-						</div>
-						<div class="grid grid-cols-2 gap-2">
-							<div class="rounded-xl bg-emerald-500/20 p-3 ring-1 ring-emerald-400/20">
-								<div class="h-2 w-2/3 rounded bg-emerald-200/40" />
-								<div class="mt-3 h-8 rounded-lg bg-emerald-400/30" />
-							</div>
-							<div class="rounded-xl bg-blue-500/20 p-3 ring-1 ring-blue-400/20">
-								<div class="h-2 w-2/3 rounded bg-blue-200/40" />
-								<div class="mt-3 h-8 rounded-lg bg-blue-400/30" />
-							</div>
-						</div>
-						<div class="rounded-xl bg-white/5 p-3 ring-1 ring-white/10">
-							<div class="flex gap-2">
-								<div class="h-10 flex-1 rounded-lg bg-white/10" />
-								<div class="h-10 flex-1 rounded-lg bg-white/10" />
-							</div>
-						</div>
-					</div>
-				</div>
+			<div class="absolute -left-6 -top-6 size-40 rounded-full bg-[#1cb5ac]/20 blur-3xl" aria-hidden="true" />
+			<div class="absolute -bottom-8 -right-4 size-48 rounded-full bg-[#154d6c]/15 blur-3xl" aria-hidden="true" />
+			<div class="phone-float relative flex justify-end">
+				<DeviceMockup
+					client:load
+					imageSrc={optimizedHeroShot.src}
+					alt="Captura del panel principal de la app Provider"
+					placeholderLabel="Provider"
+					loading="eager"
+					intrinsicWidth={optimizedHeroShot.attributes.width}
+					intrinsicHeight={optimizedHeroShot.attributes.height}
+				/>
 			</div>
 		</div>
 	</div>
 </section>
 
 <style>
-	@keyframes float-slow {
+	@keyframes float-phone {
 		0%,
 		100% {
 			transform: translateY(0);
 		}
 		50% {
-			transform: translateY(-10px);
+			transform: translateY(-12px);
 		}
 	}
-	.float-slow {
-		animation: float-slow 7s ease-in-out infinite;
+
+	.phone-float {
+		animation: float-phone 6.5s ease-in-out infinite;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.phone-float {
+			animation: none;
+		}
 	}
 </style>

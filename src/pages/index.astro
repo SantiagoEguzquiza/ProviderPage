@@ -13,14 +13,66 @@ import Footer from '../components/Footer.astro';
 
 <Layout>
 	<Header client:load />
-	<main>
-		<Hero />
-		<TrustBanner />
-		<FeatureBento client:visible />
-		<RoleTabs client:visible />
-		<TechSection />
-		<Roadmap />
-		<CtaSection />
+	<main id="page-slider-root" class="relative h-[100dvh] w-full overflow-hidden">
+		<div
+			id="page-slider-track"
+			class="page-slider-track flex w-full flex-col will-change-transform"
+		>
+			<div
+				data-page-slide
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+			>
+				<div class="flex min-h-0 flex-col">
+					<Hero />
+					<TrustBanner />
+				</div>
+			</div>
+
+			<div
+				data-page-slide
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+			>
+				<FeatureBento client:visible />
+			</div>
+
+			<div
+				data-page-slide
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+			>
+				<section
+					class="flex w-full min-h-[100dvh] flex-col justify-center gap-0 bg-white"
+					aria-label="Ciclo comercial y tecnología"
+				>
+					<TechSection />
+					<RoleTabs client:visible />
+				</section>
+			</div>
+
+			<div
+				data-page-slide
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+			>
+				<Roadmap />
+			</div>
+
+			<div
+				data-page-slide
+				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20"
+			>
+				<section
+					class="flex min-h-[100dvh] flex-col justify-between bg-[#f8fafc]"
+					aria-label="Contacto y pie de página"
+				>
+					<div class="flex flex-1 flex-col justify-center px-0 py-6 sm:py-8">
+						<CtaSection />
+					</div>
+					<Footer />
+				</section>
+			</div>
+		</div>
 	</main>
-	<Footer />
 </Layout>
+
+<script>
+	import '../scripts/section-slider.ts';
+</script>

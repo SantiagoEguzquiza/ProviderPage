@@ -1,29 +1,38 @@
 import { useState } from 'react';
 import { roles } from '../../data/site';
+import DeviceMockup from './DeviceMockup';
 
-const accents = [
-	{ bar: 'from-blue-600 to-indigo-600', screen: 'from-slate-900 via-slate-800 to-slate-900', chip: 'bg-blue-500/20 text-blue-200' },
-	{ bar: 'from-violet-600 to-fuchsia-600', screen: 'from-violet-950 via-slate-900 to-fuchsia-950', chip: 'bg-violet-500/20 text-violet-200' },
-	{ bar: 'from-emerald-600 to-teal-600', screen: 'from-emerald-950 via-slate-900 to-teal-950', chip: 'bg-emerald-500/20 text-emerald-200' },
-	{ bar: 'from-amber-500 to-orange-600', screen: 'from-amber-950 via-slate-900 to-orange-950', chip: 'bg-amber-500/20 text-amber-200' },
-];
-
-const screenLabels = ['Ventas', 'Entregas', 'Depósito', 'Panel'];
+const tabBase =
+	'rounded-2xl border px-4 py-4 text-left transition-[border-color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform';
 
 export default function RoleTabs() {
 	const [active, setActive] = useState(0);
 	const current = roles.tabs[active]!;
-	const accent = accents[active] ?? accents[0]!;
 
 	return (
-		<section id={roles.id} className="border-t border-[#e5e7eb] bg-white py-20 sm:py-24">
-			<div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+		<section
+			id={roles.id}
+			className="relative min-h-0 overflow-hidden border-t border-[#154d6c]/10 bg-white py-20 sm:py-24"
+			data-scroll-reveal
+		>
+			<div
+				className="pointer-events-none absolute right-0 top-1/4 h-[min(60vw,480px)] w-[min(60vw,480px)] translate-x-1/3 rounded-full bg-[#1cb5ac]/12 blur-[100px]"
+				aria-hidden
+			/>
+			<div
+				className="pointer-events-none absolute bottom-0 left-0 h-[min(50vw,360px)] w-[min(50vw,360px)] -translate-x-1/4 rounded-full bg-[#154d6c]/10 blur-[90px]"
+				aria-hidden
+			/>
+
+			<div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl text-center">
-					<h2 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-4xl">{roles.title}</h2>
+					<h2 className="text-gradient-section text-3xl font-semibold tracking-tighter leading-tight text-balance sm:text-4xl">
+						{roles.title}
+					</h2>
 				</div>
 
 				<div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start lg:gap-14">
-					<div role="tablist" aria-label="Roles" className="flex flex-col gap-2">
+					<div role="tablist" aria-label="Pasos del ciclo comercial" className="flex flex-col gap-2">
 						{roles.tabs.map((tab, i) => {
 							const selected = i === active;
 							return (
@@ -37,14 +46,14 @@ export default function RoleTabs() {
 									tabIndex={selected ? 0 : -1}
 									onClick={() => setActive(i)}
 									className={[
-										'rounded-2xl border px-4 py-4 text-left transition',
+										tabBase,
 										selected
-											? 'border-[#bfdbfe] bg-[#eff6ff] shadow-[var(--shadow-soft)]'
-											: 'border-transparent bg-[#f9fafb] hover:border-[#e5e7eb] hover:bg-white',
+											? 'scale-[1.01] border-[#1cb5ac]/35 bg-gradient-to-br from-[#e6f7f5] to-white shadow-[0_8px_32px_-8px_rgb(28_181_172/0.22)] ring-1 ring-[#1cb5ac]/15'
+											: 'border-transparent bg-[#f8fafc]/95 backdrop-blur-sm hover:scale-[1.005] hover:border-[#154d6c]/12 hover:bg-white hover:shadow-[var(--shadow-soft)]',
 									].join(' ')}
 								>
-									<span className="block text-sm font-semibold text-[#111827]">{tab.label}</span>
-									<span className="mt-1 block text-sm leading-relaxed text-[#4b5563] lg:hidden">{tab.description}</span>
+									<span className="block text-sm font-semibold tracking-tight text-[#154d6c]">{tab.label}</span>
+									<span className="mt-1 block text-sm leading-relaxed text-[#64748b] lg:hidden">{tab.description}</span>
 								</button>
 							);
 						})}
@@ -52,42 +61,42 @@ export default function RoleTabs() {
 
 					<div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
 						<div
+							key={active}
 							role="tabpanel"
 							id={`role-panel-${current.id}`}
 							aria-labelledby={`role-tab-${current.id}`}
-							className="min-h-[8rem]"
+							className="workflow-cross min-h-[8rem]"
 						>
-							<p className="hidden text-base leading-relaxed text-[#4b5563] lg:block">{current.description}</p>
+							<p className="hidden text-base leading-relaxed text-[#64748b] lg:block">{current.description}</p>
 						</div>
 
 						<div
 							className="relative mx-auto flex w-full max-w-[280px] justify-center lg:mx-0 lg:max-w-none"
 							aria-hidden
 						>
-							<div className="relative aspect-[9/19] w-[min(100%,260px)] rounded-[2.25rem] border border-[#e5e7eb] bg-[#f3f4f6] p-[10px] shadow-[0_24px_64px_rgb(15_23_42/0.15)]">
-								<div className="absolute left-1/2 top-0 z-10 h-6 w-24 -translate-x-1/2 rounded-b-2xl bg-[#111827]/90" />
-								<div
-									className={`relative h-full overflow-hidden rounded-[1.85rem] bg-gradient-to-br ${accent.screen} ring-1 ring-white/10`}
-								>
-									<div
-										className={`h-12 bg-gradient-to-r px-4 ${accent.bar} flex items-center justify-between`}
-									>
-										<span className="text-xs font-semibold text-white/95">Provider</span>
-										<span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${accent.chip}`}>
-											{screenLabels[active]}
-										</span>
-									</div>
-									<div className="space-y-3 p-4">
-										<div className="h-2 w-2/3 rounded bg-white/15" />
-										<div className="h-2 w-full rounded bg-white/10" />
-										<div className="h-2 w-5/6 rounded bg-white/10" />
-										<div className="mt-4 grid gap-2">
-											<div className="h-10 rounded-lg bg-white/10" />
-											<div className="h-10 rounded-lg bg-white/10" />
-											<div className="h-10 rounded-lg bg-white/10" />
+							<div className="relative aspect-[9/20] w-full max-w-[min(100%,280px)] sm:max-w-[min(100%,300px)]">
+								{roles.tabs.map((tab, i) => {
+									const isOn = i === active;
+									return (
+										<div
+											key={tab.id}
+											className={[
+												'absolute inset-0 flex justify-center',
+												'transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+												isOn
+													? 'z-10 translate-y-0 opacity-100'
+													: 'z-0 translate-y-3 opacity-0 pointer-events-none',
+											].join(' ')}
+										>
+											<DeviceMockup
+												imageSrc={tab.screenshot}
+												alt={`Vista de la app: ${tab.mockupHeaderText}`}
+												placeholderLabel={tab.label}
+												loading={i === active ? 'eager' : 'lazy'}
+											/>
 										</div>
-									</div>
-								</div>
+									);
+								})}
 							</div>
 						</div>
 					</div>

@@ -9,7 +9,7 @@ export const site = {
 
 export const nav = [
 	{ label: 'Características', href: '#caracteristicas' },
-	{ label: 'Para quién es', href: '#para-quien' },
+	{ label: 'Ciclo comercial', href: '#para-quien' },
 	{ label: 'Tecnología', href: '#tecnologia' },
 	{ label: 'Roadmap', href: '#roadmap' },
 ] as const;
@@ -21,6 +21,8 @@ export const hero = {
 		'Capacita a tus vendedores y repartidores con una app móvil potente. Gestiona ventas, inventario y clientes en tiempo real, incluso sin conexión a internet.',
 	ctaPrimary: 'Solicitar Demo',
 	ctaSecondary: 'Hablar con un asesor',
+	/** Same asset as `src/assets/screenshots/mainMenu_black.png` (Hero uses Astro `getImage` WebP from that file) */
+	screenshot: '/screenshots/mainMenu_black.png',
 } as const;
 
 export const trust = {
@@ -61,8 +63,8 @@ export const features = {
 		{
 			id: 'multitenant',
 			icon: 'cloud' as const,
-			title: 'Escalabilidad Multi-Tenant',
-			text: 'Infraestructura en la nube con aislamiento total de datos. Tu información comercial está siempre segura y privada.',
+			title: 'Infraestructura Corporativa Segura',
+			text: 'Arquitectura de vanguardia que garantiza el aislamiento total de tus datos, permitiendo que tu empresa crezca sin límites técnicos y con máxima privacidad.',
 		},
 		{
 			id: 'cotizaciones',
@@ -75,31 +77,47 @@ export const features = {
 
 export const roles = {
 	id: 'para-quien',
-	title: 'Una herramienta para cada eslabón de tu empresa',
+	title: 'Todo el ciclo comercial en una sola app',
 	tabs: [
 		{
-			id: 'vendedor',
-			label: 'Vendedor / Preventista',
+			id: 'clientes',
+			label: 'Gestión de Clientes',
 			description:
-				'Registra ventas en campo, aplica promociones, consulta el historial del cliente y cierra acuerdos más rápido.',
+				'Registra nuevos clientes, actualiza su información de contacto y organiza tu cartera para optimizar las rutas y visitas en campo.',
+			mockupHeaderText: 'Provider Clientes',
+			screenshot: null as string | null,
 		},
 		{
-			id: 'repartidor',
-			label: 'Repartidor',
+			id: 'historial',
+			label: 'Historial Comercial',
 			description:
-				'Visualiza pedidos pendientes, registra entregas con éxito y confirma la recepción de mercadería en la puerta del cliente.',
+				'Consulta compras anteriores, saldos pendientes y movimientos históricos en segundos para ofrecer una atención más personalizada.',
+			mockupHeaderText: 'Provider Historial',
+			screenshot: null as string | null,
 		},
 		{
-			id: 'deposito',
-			label: 'Personal de Depósito',
+			id: 'ventas',
+			label: 'Generación de Ventas',
 			description:
-				'Gestiona el stock físico, realiza ajustes rápidos y prepara los pedidos de forma eficiente para el próximo reparto.',
+				'Crea pedidos de forma ágil, selecciona productos rápidamente y calcula los totales automáticamente directamente frente al cliente.',
+			mockupHeaderText: 'Provider Ventas',
+			screenshot: null as string | null,
 		},
 		{
-			id: 'supervisor',
-			label: 'Supervisor y Admin',
+			id: 'inventario',
+			label: 'Productos e Inventario',
 			description:
-				'Monitorea la operación comercial, gestiona catálogos, revisa las métricas de venta y configura la empresa desde un panel centralizado.',
+				'Revisa el catálogo completo, verifica la disponibilidad de precios y recibe alertas de stock bajo antes de comprometer una venta.',
+			mockupHeaderText: 'Provider Inventario',
+			screenshot: null as string | null,
+		},
+		{
+			id: 'comprobantes',
+			label: 'Emisión de Comprobantes',
+			description:
+				'Genera comprobantes digitales en formato PDF al instante, listos para ser compartidos vía WhatsApp o correo electrónico.',
+			mockupHeaderText: 'Provider Recibos',
+			screenshot: null as string | null,
 		},
 	],
 } as const;
@@ -137,7 +155,7 @@ export const footer = {
 			title: 'Producto',
 			links: [
 				{ label: 'Características', href: '#caracteristicas' },
-				{ label: 'Roles', href: '#para-quien' },
+				{ label: 'Ciclo comercial', href: '#para-quien' },
 				{ label: 'Modo Offline', href: '#caracteristicas' },
 			],
 		},

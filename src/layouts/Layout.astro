@@ -14,7 +14,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,11 +26,40 @@ const {
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap"
 			rel="stylesheet"
 		/>
 	</head>
-	<body class="min-h-dvh bg-[var(--color-surface)] text-[var(--color-ink)]">
+	<body class="h-dvh overflow-hidden bg-[var(--color-surface)] text-[var(--color-ink-muted)]">
 		<slot />
+		<script is:inline>
+			(() => {
+				const run = () => {
+					const els = document.querySelectorAll('[data-scroll-reveal]');
+					if (!els.length) return;
+					const io = new IntersectionObserver(
+						(entries) => {
+							for (const entry of entries) {
+								if (entry.isIntersecting) {
+									entry.target.classList.add('is-revealed');
+									io.unobserve(entry.target);
+								}
+							}
+						},
+						{
+							root: null,
+							rootMargin: '0px 0px -8% 0px',
+							threshold: 0.06,
+						}
+					);
+					els.forEach((el) => io.observe(el));
+				};
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', run, { once: true });
+				} else {
+					run();
+				}
+			})();
+		</script>
 	</body>
 </html>

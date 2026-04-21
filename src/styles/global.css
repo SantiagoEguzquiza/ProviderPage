@@ -2,24 +2,34 @@
 
 @theme {
 	--font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+	--font-display: 'Montserrat', 'Inter', ui-sans-serif, system-ui, sans-serif;
 
-	--color-surface: #ffffff;
-	--color-surface-muted: #f9fafb;
-	--color-ink: #111827;
-	--color-ink-muted: #4b5563;
-	--color-border: #e5e7eb;
-
-	/* Deep trustworthy blue for primary actions */
-	--color-brand: #1d4ed8;
-	--color-brand-hover: #1e40af;
-	--color-brand-muted: #eff6ff;
+	/* Brand palette */
+	--color-brand: #1cb5ac;
+	--color-brand-hover: #169a94;
+	--color-brand-deep: #154d6c;
+	--color-brand-muted: #e6f7f5;
+	--color-surface: #f8fafc;
+	--color-surface-muted: #f1f5f9;
+	--color-ink: #154d6c;
+	--color-ink-muted: #64748b;
+	--color-dark: #262d33;
+	--color-border: #e2e8f0;
+	--color-border-brand: rgb(21 77 108 / 0.15);
 
 	--shadow-soft: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(15 23 42 / 0.06);
 	--shadow-card: 0 1px 3px rgb(0 0 0 / 0.05), 0 12px 32px rgb(15 23 42 / 0.06);
+	--shadow-primary-glow:
+		0 0 0 1px rgb(28 181 172 / 0.12), 0 4px 28px rgb(28 181 172 / 0.28), 0 12px 40px rgb(21 77 108 / 0.12);
+	--shadow-phone-long: 0 48px 96px -24px rgb(38 45 51 / 0.45), 0 24px 48px -12px rgb(21 77 108 / 0.22);
 
 	--radius-xl: 1rem;
 	--radius-2xl: 1.25rem;
 	--radius-3xl: 1.5rem;
+
+	/* Section slider: long deceleration, no hard stop */
+	--slide-ease: cubic-bezier(0.33, 0.86, 0.28, 1);
+	--slide-duration: 1.05s;
 }
 
 @layer base {
@@ -28,10 +38,121 @@
 	}
 
 	body {
-		@apply bg-surface text-ink antialiased font-sans;
+		@apply bg-surface text-ink-muted antialiased font-sans;
+	}
+
+	#page-slider-root {
+		overscroll-behavior-y: contain;
+	}
+
+	#page-slider-track {
+		transition: transform var(--slide-duration) var(--slide-ease);
+		backface-visibility: hidden;
+	}
+
+	#page-slider-track.page-slider-track--no-trans {
+		transition: none !important;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: var(--font-display);
+		@apply text-ink;
 	}
 
 	::selection {
-		@apply bg-blue-100 text-ink;
+		@apply bg-[#1cb5ac]/20 text-ink;
+	}
+}
+
+@layer utilities {
+	/* App screenshots: WebKit/Firefox sharp paths + GPU layer (mockup ~280–300 CSS px; asset ≤1280w) */
+	.device-screenshot-img {
+		display: block;
+		image-rendering: -webkit-optimize-contrast;
+		image-rendering: high-quality;
+		transform: translateZ(0);
+		will-change: transform;
+		backface-visibility: hidden;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.device-screenshot-img {
+			will-change: auto;
+		}
+	}
+
+	.text-gradient-hero {
+		@apply bg-gradient-to-br from-[#154d6c] via-[#1a5f72] to-[#1cb5ac] bg-clip-text text-transparent;
+	}
+
+	.text-gradient-section {
+		@apply bg-gradient-to-br from-[#154d6c] via-[#174a63] to-[#1cb5ac] bg-clip-text text-transparent;
+	}
+
+	[data-scroll-reveal] {
+		opacity: 0;
+		transform: translateY(1rem) scale(0.992);
+		transition:
+			opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	[data-scroll-reveal].is-revealed {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+
+	@keyframes workflow-panel-in {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.workflow-cross {
+		animation: workflow-panel-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	.btn-primary-glow {
+		transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s ease;
+		box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+	}
+
+	.btn-primary-glow:hover {
+		box-shadow: var(--shadow-primary-glow);
+	}
+
+	.cta-primary-glow {
+		transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
+	}
+
+	.cta-primary-glow:hover {
+		box-shadow:
+			0 0 0 1px rgb(255 255 255 / 0.2),
+			0 8px 32px rgb(255 255 255 / 0.18),
+			0 20px 48px rgb(38 45 51 / 0.25);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#page-slider-track {
+			transition: none !important;
+		}
+
+		[data-scroll-reveal] {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+
+		.workflow-cross {
+			animation: none;
+		}
 	}
 }
