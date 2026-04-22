@@ -1,78 +1,16 @@
-import { Smartphone } from 'lucide-react';
 import { useState } from 'react';
 import { roles } from '../../data/site';
 
 const tabBase =
 	'rounded-2xl border px-4 py-4 text-left transition-[border-color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform';
 
-const DEFAULT_SHOT_W = 1280;
-const DEFAULT_SHOT_H = 2856;
-
-type RoleTabScreenshotProps = {
-	imageSrc: string | null;
-	alt: string;
-	placeholderLabel: string;
-	loading: 'eager' | 'lazy';
-};
-
-/** Screenshot-as-is (no extra frame). Fallback: Pixel-style shell + “próximamente” when `imageSrc` is null. */
-function RoleTabScreenshot({ imageSrc, alt, placeholderLabel, loading }: RoleTabScreenshotProps) {
-	if (imageSrc) {
-		return (
-			<div className="flex h-full min-h-0 w-full items-center justify-center">
-				<div
-					className="relative w-full max-w-[min(100%,280px)] shrink-0 sm:max-w-[min(100%,300px)]"
-					style={{ aspectRatio: `${DEFAULT_SHOT_W} / ${DEFAULT_SHOT_H}` }}
-				>
-					<img
-						className="device-screenshot-img device-screenshot-deferred h-full w-full object-contain object-center"
-						src={imageSrc}
-						alt={alt}
-						width={DEFAULT_SHOT_W}
-						height={DEFAULT_SHOT_H}
-						loading={loading}
-						decoding="async"
-						fetchPriority={loading === 'eager' ? 'high' : undefined}
-					/>
-				</div>
-			</div>
-		);
-	}
-
-	return (
-		<div
-			className={[
-				'relative mx-auto w-full max-w-[min(100%,280px)] sm:max-w-[min(100%,300px)]',
-				'aspect-[9/20] shrink-0',
-			].join(' ')}
-		>
-			<div
-				className={[
-					'absolute inset-0 flex flex-col rounded-[calc(3rem+10px)] bg-slate-900 p-[10px]',
-					'shadow-[var(--shadow-phone-long)] ring-1 ring-black/50',
-				].join(' ')}
-			>
-				<div className="relative h-full min-h-0 w-full min-w-0 overflow-hidden rounded-[3rem] bg-black">
-					<div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#154d6c] via-[#1a5f72] to-[#1cb5ac] px-4 py-8 text-center">
-						<div
-							className="pointer-events-none absolute left-1/2 top-3 z-30 size-[11px] -translate-x-1/2 rounded-full bg-black ring-1 ring-black/80 sm:top-3.5 sm:size-3"
-							aria-hidden
-						/>
-						<div className="rounded-2xl bg-white/10 p-3 ring-1 ring-white/20 backdrop-blur-sm">
-							<Smartphone className="size-9 text-white/90" strokeWidth={1.25} aria-hidden />
-						</div>
-						<p className="text-[11px] font-semibold uppercase tracking-wide text-white/90">{placeholderLabel}</p>
-						<p className="text-[10px] font-medium leading-snug text-white/70">Captura próximamente</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-}
+const CLIENTES_TAB_ID = 'clientes' as const;
 
 export default function RoleTabs() {
 	const [active, setActive] = useState(0);
 	const current = roles.tabs[active]!;
+	const showClientesMockup =
+		current.id === CLIENTES_TAB_ID && current.screenshot != null && current.screenshot !== '';
 
 	return (
 		<section
@@ -127,7 +65,13 @@ export default function RoleTabs() {
 						})}
 					</div>
 
-					<div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+					<div
+						className={[
+							'grid gap-8',
+							'lg:items-center',
+							showClientesMockup ? 'lg:grid-cols-[minmax(0,1fr)_auto]' : '',
+						].join(' ')}
+					>
 						<div
 							key={active}
 							role="tabpanel"
@@ -140,33 +84,18 @@ export default function RoleTabs() {
 							</p>
 						</div>
 
-						<div
-							className="relative mx-auto flex w-full max-w-[280px] justify-center lg:mx-0 lg:max-w-none"
-							aria-hidden
-						>
-							<div className="phone-mockup-stabilize relative aspect-[9/20] w-full max-w-[min(100%,280px)] sm:max-w-[min(100%,300px)]">
-								{roles.tabs.map((tab, i) => {
-									const isOn = i === active;
-									return (
-										<div
-											key={tab.id}
-											className={[
-												'absolute inset-0 flex justify-center',
-												'transition-opacity duration-500 ease-out motion-reduce:transition-none',
-												isOn ? 'z-10 opacity-100' : 'z-0 opacity-0 pointer-events-none',
-											].join(' ')}
-										>
-											<RoleTabScreenshot
-												imageSrc={tab.screenshot}
-												alt={`Vista de la app: ${tab.mockupHeaderText}`}
-												placeholderLabel={tab.label}
-												loading={i === active ? 'eager' : 'lazy'}
-											/>
-										</div>
-									);
-								})}
+						{showClientesMockup && current.screenshot ? (
+							<div className="phone-mockup-stabilize relative mx-auto flex w-full max-w-[min(100%,320px)] justify-center sm:max-w-[min(100%,360px)] lg:mx-0 lg:max-w-[min(100%,380px)]">
+								<img
+									className="h-auto w-full object-contain object-center"
+									src={current.screenshot}
+									alt={`Vista de la app: ${current.mockupHeaderText}`}
+									loading="eager"
+									decoding="async"
+									fetchPriority="high"
+								/>
 							</div>
-						</div>
+						) : null}
 					</div>
 				</div>
 			</div>

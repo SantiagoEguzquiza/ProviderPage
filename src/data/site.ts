@@ -90,38 +90,48 @@ export const roles = {
 			description:
 				'Registra nuevos clientes, actualiza su información de contacto y organiza tu cartera para optimizar las rutas y visitas en campo.',
 			mockupHeaderText: 'Provider Clientes',
+			// Colocar `gestion_clientes.png` en `public/` y asignar a `screenshot` cuando quieras mostrarlo.
+			// screenshot: '/gestion_clientes.png',
 			screenshot: null as string | null,
 		},
 		{
-			id: 'historial',
-			label: 'Historial Comercial',
+			id: 'productos',
+			label: 'Gestión de Productos',
 			description:
-				'Consulta compras anteriores, saldos pendientes y movimientos históricos en segundos para ofrecer una atención más personalizada.',
-			mockupHeaderText: 'Provider Historial',
+				'Mantén el catálogo actualizado, precios, códigos y variantes, con stock y disponibilidad clara para tu equipo en ruta.',
+			mockupHeaderText: 'Provider Productos',
+			screenshot: null as string | null,
+		},
+		{
+			id: 'cuenta-corriente',
+			label: 'Cuenta Corriente',
+			description:
+				'Consulta saldos, comprobantes y movimientos con el cliente, con historial claro y seguimiento de lo pendiente.',
+			mockupHeaderText: 'Provider Cuenta corriente',
 			screenshot: null as string | null,
 		},
 		{
 			id: 'ventas',
-			label: 'Generación de Ventas',
+			label: 'Gestión de Ventas',
 			description:
-				'Crea pedidos de forma ágil, selecciona productos rápidamente y calcula los totales automáticamente directamente frente al cliente.',
+				'Crea pedidos de forma ágil, selecciona productos, aplica listas y calcula totales frente al cliente, incluso en modo offline.',
 			mockupHeaderText: 'Provider Ventas',
 			screenshot: null as string | null,
 		},
 		{
-			id: 'inventario',
-			label: 'Productos e Inventario',
+			id: 'compras',
+			label: 'Gestión de Compras',
 			description:
-				'Revisa el catálogo completo, verifica la disponibilidad de precios y recibe alertas de stock bajo antes de comprometer una venta.',
-			mockupHeaderText: 'Provider Inventario',
+				'Registra pedidos a proveedores, condiciones y recepciones para alinear abastecimiento con lo que vende tu equipo en campo.',
+			mockupHeaderText: 'Provider Compras',
 			screenshot: null as string | null,
 		},
 		{
-			id: 'comprobantes',
-			label: 'Emisión de Comprobantes',
+			id: 'cotizaciones',
+			label: 'Cotizaciones',
 			description:
-				'Genera comprobantes digitales en formato PDF al instante, listos para ser compartidos vía WhatsApp o correo electrónico.',
-			mockupHeaderText: 'Provider Recibos',
+				'Arma presupuestos con el tipo de cambio y listas al día, y compártelos con el cliente para acelerar el cierre comercial.',
+			mockupHeaderText: 'Provider Cotizaciones',
 			screenshot: null as string | null,
 		},
 	],
