@@ -63,15 +63,15 @@ const heroImgH = hero.screenshotHeight;
 		<div class="relative mx-auto w-full max-w-sm lg:mx-0 lg:max-w-none lg:justify-self-end">
 			<div class="absolute -left-6 -top-6 size-40 rounded-full bg-[#1cb5ac]/20 blur-3xl" aria-hidden="true" />
 			<div class="absolute -bottom-8 -right-4 size-48 rounded-full bg-[#154d6c]/15 blur-3xl" aria-hidden="true" />
-			<div class="phone-float relative flex justify-end">
+			<div class="relative flex justify-end">
 				<div
-					class="relative w-full max-w-[min(100%,280px)] shrink-0 sm:max-w-[min(100%,300px)]"
+					class="phone-mockup-stabilize relative w-full max-w-[min(100%,280px)] shrink-0 sm:max-w-[min(100%,300px)]"
 					style={`aspect-ratio: ${heroImgW} / ${heroImgH}`}
 				>
 					<div class="absolute inset-0" role="img" aria-label="Captura del panel principal de la app Provider">
-						<!-- Light theme: white UI mockup; subtle lift on pale backgrounds -->
+						<!-- Light theme: white UI mockup -->
 						<img
-							class="device-screenshot-img absolute inset-0 h-full w-full object-contain object-center opacity-100 transition-theme-opacity motion-reduce:transition-none dark:opacity-0 drop-shadow-[0_12px_40px_-8px_rgb(21_77_108/0.18)]"
+							class="device-screenshot-img device-screenshot-fade absolute inset-0 h-full w-full object-contain object-center opacity-100 dark:opacity-0 drop-shadow-[0_12px_40px_-8px_rgb(21_77_108/0.18)]"
 							src={heroShotLight}
 							alt=""
 							width={heroImgW}
@@ -82,7 +82,7 @@ const heroImgH = hero.screenshotHeight;
 						/>
 						<!-- Dark theme: black UI mockup -->
 						<img
-							class="device-screenshot-img absolute inset-0 h-full w-full object-contain object-center opacity-0 transition-theme-opacity motion-reduce:transition-none dark:opacity-100"
+							class="device-screenshot-img device-screenshot-fade absolute inset-0 h-full w-full object-contain object-center opacity-0 dark:opacity-100"
 							src={heroShotDark}
 							alt=""
 							width={heroImgW}
@@ -97,25 +97,3 @@ const heroImgH = hero.screenshotHeight;
 		</div>
 	</div>
 </div>
-
-<style>
-	@keyframes float-phone {
-		0%,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-12px);
-		}
-	}
-
-	.phone-float {
-		animation: float-phone 6.5s ease-in-out infinite;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.phone-float {
-			animation: none;
-		}
-	}
-</style>

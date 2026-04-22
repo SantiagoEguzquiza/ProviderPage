@@ -82,13 +82,13 @@
 @layer utilities {
 	/* .section-snap-panel marks full-viewport snap children; snap physics are native. */
 
-	/* App screenshots: WebKit/Firefox sharp paths + GPU layer */
+	/* App screenshots: sharp rendering, no compositor translate (avoids snap/jitter) */
 	.device-screenshot-img {
 		display: block;
 		image-rendering: -webkit-optimize-contrast;
 		image-rendering: high-quality;
-		transform: translateZ(0);
-		will-change: transform;
+		transform: none !important;
+		will-change: auto;
 		backface-visibility: hidden;
 	}
 
@@ -98,10 +98,23 @@
 		contain-intrinsic-size: 300px 640px;
 	}
 
+	/* Light/dark cross-fade: opacity only, no elastic overshoot */
+	.device-screenshot-fade {
+		transition-property: opacity;
+		transition-duration: var(--theme-transition-duration);
+		transition-timing-function: ease-out;
+	}
+
 	@media (prefers-reduced-motion: reduce) {
-		.device-screenshot-img {
-			will-change: auto;
+		.device-screenshot-fade {
+			transition: none;
 		}
+	}
+
+	/* WebKit: stabilize 3D stacking during scroll-snap (frame only, not the bitmap) */
+	.phone-mockup-stabilize {
+		perspective: 1000px;
+		backface-visibility: hidden;
 	}
 
 	/* Shared light/dark morph timing (duration + ease from @theme) */

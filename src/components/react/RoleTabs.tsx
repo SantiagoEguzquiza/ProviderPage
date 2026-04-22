@@ -77,8 +77,7 @@ export default function RoleTabs() {
 	return (
 		<section
 			id={roles.id}
-			className="section-snap-panel relative min-h-0 flex-1 overflow-hidden border-t border-[#154d6c]/10 bg-white py-20 transition-theme-colors sm:py-24 dark:border-[#f8fafc]/10 dark:bg-[#262D33]"
-			data-scroll-reveal
+			className="section-snap-panel relative min-h-0 flex-1 overflow-x-hidden border-t border-[#154d6c]/10 bg-white py-20 transition-theme-colors sm:py-24 dark:border-[#f8fafc]/10 dark:bg-[#262D33]"
 		>
 			<div
 				className="pointer-events-none absolute right-0 top-1/4 h-[min(60vw,480px)] w-[min(60vw,480px)] translate-x-1/3 rounded-full bg-[#1cb5ac]/12 blur-[100px]"
@@ -145,7 +144,7 @@ export default function RoleTabs() {
 							className="relative mx-auto flex w-full max-w-[280px] justify-center lg:mx-0 lg:max-w-none"
 							aria-hidden
 						>
-							<div className="relative aspect-[9/20] w-full max-w-[min(100%,280px)] sm:max-w-[min(100%,300px)]">
+							<div className="phone-mockup-stabilize relative aspect-[9/20] w-full max-w-[min(100%,280px)] sm:max-w-[min(100%,300px)]">
 								{roles.tabs.map((tab, i) => {
 									const isOn = i === active;
 									return (
@@ -153,10 +152,8 @@ export default function RoleTabs() {
 											key={tab.id}
 											className={[
 												'absolute inset-0 flex justify-center',
-												'transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
-												isOn
-													? 'z-10 translate-y-0 opacity-100'
-													: 'z-0 translate-y-3 opacity-0 pointer-events-none',
+												'transition-opacity duration-500 ease-out motion-reduce:transition-none',
+												isOn ? 'z-10 opacity-100' : 'z-0 opacity-0 pointer-events-none',
 											].join(' ')}
 										>
 											<RoleTabScreenshot
