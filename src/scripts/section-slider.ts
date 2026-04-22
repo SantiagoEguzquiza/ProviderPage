@@ -23,10 +23,11 @@ function clamp(n: number, min: number, max: number) {
 
 function initSectionSlider() {
 	const root = document.querySelector<HTMLElement>('#page-slider-root');
-	const track = document.querySelector<HTMLElement>('#page-slider-track');
+	const trackCandidate = document.querySelector<HTMLElement>('#page-slider-track');
 	const slides = Array.from(document.querySelectorAll<HTMLElement>('[data-page-slide]'));
 
-	if (!root || !track || slides.length === 0) return;
+	if (!root || !trackCandidate || slides.length === 0) return;
+	const track = trackCandidate;
 
 	const count = slides.length;
 	const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
