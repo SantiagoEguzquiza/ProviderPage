@@ -5,8 +5,7 @@ import { hero, nav, site } from '../data/site';
 
 <header
 	id="site-header"
-	data-scrolled="false"
-	class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-[#f8fafc]/0 transition-[background-color,box-shadow,backdrop-filter,border-color] delay-0 duration-300 dark:bg-[#262d33]/0 dark:backdrop-blur-0 data-[scrolled=true]:border-[#154d6c]/10 data-[scrolled=true]:bg-[#f8fafc]/95 data-[scrolled=true]:shadow-[0_1px_0_rgb(0_0_0/0.04)] data-[scrolled=true]:backdrop-blur-md dark:data-[scrolled=true]:border-[#f8fafc]/10 dark:data-[scrolled=true]:bg-[#262d33]/95 [--stagger:0ms]"
+	class="fixed top-0 left-0 z-50 w-full transform translate-y-0 border-b border-[#154d6c]/15 bg-white/95 shadow-[0_10px_32px_-14px_rgba(21,77,108,0.14)] backdrop-blur-sm transition-transform duration-500 ease-in-out dark:border-[#f8fafc]/15 dark:bg-[#262D33]/95 [--stagger:0ms]"
 >
 	<div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
 		<a href="#inicio" class="text-lg font-semibold tracking-tight text-[#154d6c] transition-theme-colors dark:text-[#f8fafc]">
@@ -59,7 +58,7 @@ import { hero, nav, site } from '../data/site';
 
 	<div
 		id="mobile-nav"
-		class="hidden border-t border-[#154d6c]/10 bg-[#f8fafc] px-4 py-4 transition-theme-colors dark:border-[#f8fafc]/10 dark:bg-[#262d33] md:hidden"
+		class="hidden border-t border-[#154d6c]/15 px-4 py-4 transition-theme-colors dark:border-[#f8fafc]/15 md:hidden"
 	>
 		<nav class="flex flex-col gap-3" aria-label="Móvil">
 			{
@@ -89,18 +88,43 @@ import { hero, nav, site } from '../data/site';
 	const iconMenu = menuBtn?.querySelector('.icon-menu');
 	const iconClose = menuBtn?.querySelector('.icon-close');
 
-	function setScrolled(scrolled) {
-		header?.setAttribute('data-scrolled', String(scrolled));
+	let lastScrollY = 0;
+
+	const HIDE_AFTER_SCROLL_PX = 100;
+
+	function setHeaderSlideHidden(hidden) {
+		if (!header) return;
+		if (hidden) {
+			header.classList.add('-translate-y-full');
+			header.classList.remove('translate-y-0');
+		} else {
+			header.classList.remove('-translate-y-full');
+			header.classList.add('translate-y-0');
+		}
 	}
 
-	function updateScrolledFromMain() {
+	function updateFromScroll() {
 		const main = document.getElementById('page-scroll-root');
-		const y = main instanceof HTMLElement ? main.scrollTop : 0;
-		setScrolled(y > 12);
+		const rawY = main instanceof HTMLElement ? main.scrollTop : 0;
+		const currentScrollY = Math.max(0, rawY);
+
+		if (!header) return;
+
+		const menuOpen = menuBtn?.getAttribute('aria-expanded') === 'true';
+
+		if (currentScrollY <= 0 || menuOpen) {
+			setHeaderSlideHidden(false);
+		} else if (currentScrollY < lastScrollY) {
+			setHeaderSlideHidden(false);
+		} else if (currentScrollY > lastScrollY && currentScrollY > HIDE_AFTER_SCROLL_PX) {
+			setHeaderSlideHidden(true);
+		}
+
+		lastScrollY = currentScrollY;
 	}
 
-	updateScrolledFromMain();
-	document.getElementById('page-scroll-root')?.addEventListener('scroll', updateScrolledFromMain, { passive: true });
+	updateFromScroll();
+	document.getElementById('page-scroll-root')?.addEventListener('scroll', updateFromScroll, { passive: true });
 
 	menuBtn?.addEventListener('click', () => {
 		const open = menuBtn.getAttribute('aria-expanded') === 'true';
@@ -110,6 +134,7 @@ import { hero, nav, site } from '../data/site';
 		mobileNav?.classList.toggle('hidden', !next);
 		iconMenu?.classList.toggle('hidden', next);
 		iconClose?.classList.toggle('hidden', !next);
+		if (next) setHeaderSlideHidden(false);
 	});
 
 	mobileNav?.querySelectorAll('a').forEach((a) => {
