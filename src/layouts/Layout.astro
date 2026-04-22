@@ -63,8 +63,8 @@ const {
 						},
 						{
 							root: root,
-							rootMargin: '0px 0px -8% 0px',
-							threshold: 0.06,
+							rootMargin: '0px 0px -6% 0px',
+							threshold: 0.08,
 						}
 					);
 					els.forEach((el) => io.observe(el));
@@ -73,6 +73,239 @@ const {
 					document.addEventListener('DOMContentLoaded', run, { once: true });
 				} else {
 					run();
+				}
+			})();
+		</script>
+		<script is:inline>
+			(() => {
+				const AUTO_MS = 800;
+				const ARM_MS = 200;
+				const TH = 0.25;
+
+				const mqlW = window.matchMedia('(min-width: 768px)');
+				const mqlR = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+				const pageRoot = () => document.getElementById('page-scroll-root');
+				/** Top-level "page" sections: direct <section> children, plus one <section> per client island (e.g. FeatureBento). */
+				const pageSectionsFromMain = (root) => {
+					const out = [];
+					for (const child of root.children) {
+						if (!(child instanceof Element)) continue;
+						if (child.tagName === 'SECTION') {
+							out.push(child);
+							continue;
+						}
+						const only = child.querySelector?.(':scope > section');
+						if (only) {
+							out.push(only);
+							continue;
+						}
+						const any = child.querySelector?.('section');
+						if (any) out.push(any);
+					}
+					return out;
+				};
+				const yInScrollRoot = (el, root) => {
+					if (!(el instanceof HTMLElement) || !root) return 0;
+					return el.getBoundingClientRect().top - root.getBoundingClientRect().top + root.scrollTop;
+				};
+				/** Eager: down → prefer target further down; up → further up. */
+				const pick = (cands, d) => {
+					if (cands.length === 1) return cands[0].el;
+					return cands.reduce(
+						(best, c) => {
+							if (d === 'down') return c.top > best.top ? c : best;
+							return c.top < best.top ? c : best;
+						},
+						cands[0]
+					).el;
+				};
+
+				let rootEl = null;
+				let io = null;
+				let mut = null;
+				let isAutoScrolling = false;
+				let autoT = 0;
+				let armT = 0;
+				let lastY = 0;
+				let dir = 'down';
+				/** @type {Map<Element, number>} */
+				const prev = new Map();
+				let canSnap = false;
+
+				const onScroll = () => {
+					const r = pageRoot();
+					if (!r) return;
+					const t = r.scrollTop;
+					if (t > lastY) dir = 'down';
+					else if (t < lastY) dir = 'up';
+					lastY = t;
+				};
+
+				const startAuto = () => {
+					isAutoScrolling = true;
+					clearTimeout(autoT);
+					autoT = setTimeout(() => {
+						isAutoScrolling = false;
+					}, AUTO_MS);
+				};
+
+				const seedPrev = (entries) => {
+					for (const e of entries) {
+						if (!e.isIntersecting) prev.set(e.target, 0);
+						else prev.set(e.target, e.intersectionRatio);
+					}
+				};
+
+				const runIO = (entries) => {
+					if (!io || !rootEl) return;
+					if (isAutoScrolling) {
+						seedPrev(entries);
+						return;
+					}
+					if (!canSnap) {
+						seedPrev(entries);
+						return;
+					}
+
+					/** @type {{ el: Element; top: number; r: number }[]} */
+					const cands = [];
+					for (const entry of entries) {
+						if (!entry.isIntersecting) {
+							prev.set(entry.target, 0);
+							continue;
+						}
+						const r = entry.intersectionRatio;
+						const was = prev.has(entry.target) ? prev.get(entry.target) : 0;
+						const el = entry.target;
+						const top = el instanceof HTMLElement ? yInScrollRoot(el, rootEl) : 0;
+						if (r >= TH && was < TH) cands.push({ el, top, r });
+						prev.set(entry.target, r);
+					}
+					if (cands.length === 0) return;
+					const el = pick(cands, dir);
+					startAuto();
+					if (el instanceof HTMLElement) {
+						el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+					}
+				};
+
+				const connect = () => {
+					if (mut) {
+						mut.disconnect();
+						mut = null;
+					}
+					if (io) {
+						io.disconnect();
+						io = null;
+					}
+					if (rootEl) {
+						rootEl.removeEventListener('scroll', onScroll);
+						rootEl = null;
+					}
+					if (autoT) {
+						clearTimeout(autoT);
+						autoT = 0;
+					}
+					if (armT) {
+						clearTimeout(armT);
+						armT = 0;
+					}
+					isAutoScrolling = false;
+					canSnap = false;
+
+					const root = pageRoot();
+					if (!root) return;
+					if (mqlR.matches) return;
+					if (!mqlW.matches) return;
+
+					rootEl = root;
+					lastY = rootEl.scrollTop;
+					rootEl.addEventListener('scroll', onScroll, { passive: true });
+					armT = setTimeout(() => {
+						armT = 0;
+						if (io) {
+							const pending = io.takeRecords();
+							if (pending.length) seedPrev(pending);
+						}
+						canSnap = true;
+					}, ARM_MS);
+
+					const secs = pageSectionsFromMain(rootEl);
+					if (secs.length === 0) return;
+					prev.clear();
+					io = new IntersectionObserver(runIO, { root: rootEl, rootMargin: '0px', threshold: TH });
+					secs.forEach((s) => {
+						prev.set(s, 0);
+						io.observe(s);
+					});
+
+					let mutRaf = 0;
+					mut = new MutationObserver(() => {
+						if (mutRaf) cancelAnimationFrame(mutRaf);
+						mutRaf = requestAnimationFrame(() => {
+							mutRaf = 0;
+							if (!rootEl) return;
+							if (!mqlW.matches || mqlR.matches) return;
+							if (!io) return;
+							for (const s of pageSectionsFromMain(rootEl)) {
+								if (!prev.has(s)) {
+									connect();
+									return;
+								}
+							}
+						});
+					});
+					mut.observe(rootEl, { childList: true, subtree: true });
+				};
+
+				const teardown = () => {
+					if (mut) {
+						mut.disconnect();
+						mut = null;
+					}
+					if (io) {
+						io.disconnect();
+						io = null;
+					}
+					if (rootEl) {
+						rootEl.removeEventListener('scroll', onScroll);
+						rootEl = null;
+					}
+					if (autoT) {
+						clearTimeout(autoT);
+						autoT = 0;
+					}
+					if (armT) {
+						clearTimeout(armT);
+						armT = 0;
+					}
+					isAutoScrolling = false;
+					canSnap = false;
+					prev.clear();
+				};
+
+				const rebindMql = () => {
+					if (mqlW.matches && !mqlR.matches) {
+						if (!io) connect();
+					} else {
+						teardown();
+					}
+				};
+
+				const boot = () => {
+					if (mqlR.matches) return;
+					mqlW.addEventListener('change', rebindMql);
+					mqlR.addEventListener('change', rebindMql);
+					if (mqlW.matches) {
+						connect();
+					}
+				};
+
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', boot, { once: true });
+				} else {
+					boot();
 				}
 			})();
 		</script>

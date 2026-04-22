@@ -88,7 +88,7 @@ export default function RoleTabs() {
 				aria-hidden
 			/>
 
-			<div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+			<div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8" data-scroll-reveal>
 				<div className="mx-auto max-w-2xl text-center">
 					<h2 className="text-gradient-section text-3xl font-semibold tracking-tighter leading-tight text-balance sm:text-4xl">
 						{roles.title}

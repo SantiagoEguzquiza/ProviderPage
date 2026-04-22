@@ -23,14 +23,13 @@ export default function FeatureBento() {
 		<section
 			id={features.id}
 			aria-labelledby="features-heading"
-			className="section-snap-panel relative flex min-h-[100dvh] snap-start snap-always flex-col overflow-hidden border-t border-[#154d6c]/10 bg-[#f8fafc] py-20 transition-theme-colors delay-150 ease-in-out duration-500 sm:py-24 dark:border-[#f8fafc]/10 dark:bg-[#262D33] [--stagger:150ms]"
-			data-scroll-reveal
+			className="section-snap-panel relative flex min-h-[100dvh] w-full flex-col overflow-x-hidden border-t border-[#154d6c]/10 bg-[#f8fafc] py-12 transition-theme-colors delay-150 ease-in-out duration-500 sm:py-24 dark:border-[#f8fafc]/10 dark:bg-[#262D33] [--stagger:150ms]"
 		>
 			<div
 				className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgb(28_181_172/0.12),transparent)]"
 				aria-hidden
 			/>
-			<div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+			<div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8" data-scroll-reveal>
 				<div className="mx-auto max-w-2xl text-center">
 					<h2
 						id="features-heading"
@@ -43,7 +42,7 @@ export default function FeatureBento() {
 					</p>
 				</div>
 
-				<ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				<ul className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
 					{features.items.map((item) => {
 						const Icon = icons[item.icon];
 						const spotlight: CSSProperties = {

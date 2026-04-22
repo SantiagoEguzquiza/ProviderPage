@@ -46,14 +46,16 @@
 	}
 
 	body {
+		scroll-behavior: smooth;
 		@apply bg-[#F8FAFC] antialiased font-sans text-[#64748B] dark:bg-[#262D33] dark:text-[#94A3B8];
 		transition:
 			background-color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
 			color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms);
 	}
 
-	/* Primary scroll: full-viewport snap column (GPU + smooth snap) */
+	/* Primary scroll: full-height column (smooth scroll; section snap is JS on md+) */
 	.page-snap-container {
+		scroll-behavior: smooth;
 		-webkit-overflow-scrolling: touch;
 		overscroll-behavior-y: contain;
 		backface-visibility: hidden;
@@ -82,7 +84,7 @@
 }
 
 @layer utilities {
-	/* .section-snap-panel marks full-viewport snap children; snap physics are native. */
+	/* .section-snap-panel: full-viewport section layout (visual only). */
 
 	/* App screenshots: sharp rendering, no compositor translate (avoids snap/jitter) */
 	.device-screenshot-img {
@@ -186,15 +188,15 @@
 
 	[data-scroll-reveal] {
 		opacity: 0;
-		transform: translateY(1rem) scale(0.992);
+		transform: translateY(1rem);
 		transition:
-			opacity 1s ease-in-out,
-			transform 1s ease-in-out;
+			opacity 700ms ease-out,
+			transform 700ms ease-out;
 	}
 
 	[data-scroll-reveal].is-revealed {
 		opacity: 1;
-		transform: translateY(0) scale(1);
+		transform: translateY(0);
 	}
 
 	@keyframes workflow-panel-in {
