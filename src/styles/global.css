@@ -29,10 +29,6 @@
 	--radius-2xl: 1.25rem;
 	--radius-3xl: 1.5rem;
 
-	/* Section slider: long deceleration, no hard stop */
-	--slide-ease: cubic-bezier(0.33, 0.86, 0.28, 1);
-	--slide-duration: 1.05s;
-
 	/* Light/dark theme morph (shared across UI + hero shots) */
 	--theme-transition-duration: 1.2s;
 	--theme-transition-timing: cubic-bezier(0.45, 0, 0.2, 1);
@@ -41,9 +37,10 @@
 @layer base {
 	html {
 		scroll-behavior: smooth;
-		transition-property: color, background-color, border-color;
-		transition-duration: var(--theme-transition-duration);
-		transition-timing-function: var(--theme-transition-timing);
+		transition:
+			color var(--theme-transition-duration) var(--theme-transition-timing),
+			background-color var(--theme-transition-duration) var(--theme-transition-timing),
+			border-color var(--theme-transition-duration) var(--theme-transition-timing);
 	}
 
 	body {
@@ -53,17 +50,13 @@
 			color var(--theme-transition-duration) var(--theme-transition-timing);
 	}
 
-	#page-slider-root {
+	/* Primary scroll: full-viewport snap column (GPU + smooth snap) */
+	.page-snap-container {
+		-webkit-overflow-scrolling: touch;
 		overscroll-behavior-y: contain;
-	}
-
-	#page-slider-track {
-		transition: transform var(--slide-duration) var(--slide-ease);
 		backface-visibility: hidden;
-	}
-
-	#page-slider-track.page-slider-track--no-trans {
-		transition: none !important;
+		will-change: transform;
+		transform: translateZ(0);
 	}
 
 	h1,
@@ -87,7 +80,9 @@
 }
 
 @layer utilities {
-	/* App screenshots: WebKit/Firefox sharp paths + GPU layer (mockup ~280–300 CSS px; asset ≤1280w) */
+	/* .section-snap-panel marks full-viewport snap children; snap physics are native. */
+
+	/* App screenshots: WebKit/Firefox sharp paths + GPU layer */
 	.device-screenshot-img {
 		display: block;
 		image-rendering: -webkit-optimize-contrast;
@@ -95,6 +90,12 @@
 		transform: translateZ(0);
 		will-change: transform;
 		backface-visibility: hidden;
+	}
+
+	/* Deferred phone shots (e.g. tab mockups): skip paint off the snap viewport */
+	.device-screenshot-img.device-screenshot-deferred {
+		content-visibility: auto;
+		contain-intrinsic-size: 300px 640px;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -159,8 +160,8 @@
 		opacity: 0;
 		transform: translateY(1rem) scale(0.992);
 		transition:
-			opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-			transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+			opacity 1s ease-in-out,
+			transform 1s ease-in-out;
 	}
 
 	[data-scroll-reveal].is-revealed {
@@ -208,8 +209,8 @@
 			--theme-transition-duration: 0.01ms;
 		}
 
-		#page-slider-track {
-			transition: none !important;
+		.page-snap-container {
+			scroll-behavior: auto;
 		}
 
 		[data-scroll-reveal] {

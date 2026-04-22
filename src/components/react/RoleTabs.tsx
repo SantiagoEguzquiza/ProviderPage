@@ -25,7 +25,7 @@ function RoleTabScreenshot({ imageSrc, alt, placeholderLabel, loading }: RoleTab
 					style={{ aspectRatio: `${DEFAULT_SHOT_W} / ${DEFAULT_SHOT_H}` }}
 				>
 					<img
-						className="device-screenshot-img h-full w-full object-contain object-center"
+						className="device-screenshot-img device-screenshot-deferred h-full w-full object-contain object-center"
 						src={imageSrc}
 						alt={alt}
 						width={DEFAULT_SHOT_W}
@@ -77,7 +77,7 @@ export default function RoleTabs() {
 	return (
 		<section
 			id={roles.id}
-			className="relative min-h-0 overflow-hidden border-t border-[#154d6c]/10 bg-white py-20 transition-theme-colors sm:py-24 dark:border-[#f8fafc]/10 dark:bg-[#262D33]"
+			className="section-snap-panel relative min-h-0 flex-1 overflow-hidden border-t border-[#154d6c]/10 bg-white py-20 transition-theme-colors sm:py-24 dark:border-[#f8fafc]/10 dark:bg-[#262D33]"
 			data-scroll-reveal
 		>
 			<div

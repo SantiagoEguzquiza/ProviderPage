@@ -9,7 +9,7 @@ import { hero, nav, site } from '../data/site';
 	class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-[#f8fafc]/0 transition-[background-color,box-shadow,backdrop-filter,border-color] duration-300 dark:bg-[#262d33]/0 dark:backdrop-blur-0 data-[scrolled=true]:border-[#154d6c]/10 data-[scrolled=true]:bg-[#f8fafc]/95 data-[scrolled=true]:shadow-[0_1px_0_rgb(0_0_0/0.04)] data-[scrolled=true]:backdrop-blur-md dark:data-[scrolled=true]:border-[#f8fafc]/10 dark:data-[scrolled=true]:bg-[#262d33]/95"
 >
 	<div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-		<a href="#" class="text-lg font-semibold tracking-tight text-[#154d6c] transition-theme-colors dark:text-[#f8fafc]">
+		<a href="#inicio" class="text-lg font-semibold tracking-tight text-[#154d6c] transition-theme-colors dark:text-[#f8fafc]">
 			{site.name}
 		</a>
 
@@ -93,21 +93,14 @@ import { hero, nav, site } from '../data/site';
 		header?.setAttribute('data-scrolled', String(scrolled));
 	}
 
-	function updateScrolledFromSlides() {
-		const slides = document.querySelectorAll('[data-page-slide]');
-		let scrolled = false;
-		slides.forEach((el) => {
-			if ((el instanceof HTMLElement ? el.scrollTop : 0) > 12) scrolled = true;
-		});
-		setScrolled(scrolled);
+	function updateScrolledFromMain() {
+		const main = document.getElementById('page-scroll-root');
+		const y = main instanceof HTMLElement ? main.scrollTop : 0;
+		setScrolled(y > 12);
 	}
 
-	updateScrolledFromSlides();
-	document.querySelectorAll('[data-page-slide]').forEach((el) => {
-		if (el instanceof HTMLElement) {
-			el.addEventListener('scroll', updateScrolledFromSlides, { passive: true });
-		}
-	});
+	updateScrolledFromMain();
+	document.getElementById('page-scroll-root')?.addEventListener('scroll', updateScrolledFromMain, { passive: true });
 
 	menuBtn?.addEventListener('click', () => {
 		const open = menuBtn.getAttribute('aria-expanded') === 'true';

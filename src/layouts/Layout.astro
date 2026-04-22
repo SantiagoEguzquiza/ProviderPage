@@ -47,6 +47,7 @@ const {
 		<script is:inline>
 			(() => {
 				const run = () => {
+					const root = document.getElementById('page-scroll-root');
 					const els = document.querySelectorAll('[data-scroll-reveal]');
 					if (!els.length) return;
 					const io = new IntersectionObserver(
@@ -59,7 +60,7 @@ const {
 							}
 						},
 						{
-							root: null,
+							root: root,
 							rootMargin: '0px 0px -8% 0px',
 							threshold: 0.06,
 						}

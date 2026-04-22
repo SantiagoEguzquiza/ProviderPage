@@ -14,68 +14,40 @@ import Footer from '../components/Footer.astro';
 <Layout>
 	<Header />
 	<main
-		id="page-slider-root"
-		class="relative h-[100dvh] w-full overflow-hidden bg-[#F8FAFC] transition-theme-colors dark:bg-[#262D33]"
+		id="page-scroll-root"
+		class="page-snap-container relative h-[100dvh] w-full snap-y snap-mandatory overflow-y-auto overflow-x-hidden scroll-pt-16 scroll-smooth bg-[#F8FAFC] transition-theme-colors dark:bg-[#262D33]"
 	>
-		<div
-			id="page-slider-track"
-			class="page-slider-track flex w-full flex-col will-change-transform transition-theme-colors"
+		<section
+			id="inicio"
+			class="section-snap-panel flex min-h-[100dvh] snap-start snap-always flex-col justify-between bg-[#F8FAFC] transition-theme-colors dark:bg-[#262D33]"
+			aria-label="Inicio y confianza"
 		>
-			<div
-				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
-			>
-				<div class="flex min-h-0 flex-col">
-					<Hero />
-					<TrustBanner />
-				</div>
+			<div class="flex min-h-0 flex-1 flex-col justify-center">
+				<Hero />
 			</div>
+			<TrustBanner />
+		</section>
 
-			<div
-				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
-			>
-				<FeatureBento client:visible />
-			</div>
+		<FeatureBento client:visible />
 
-			<div
-				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
-			>
-				<section
-					class="flex w-full min-h-[100dvh] flex-col justify-center gap-0 bg-white transition-theme-colors dark:bg-[#262D33]"
-					aria-label="Ciclo comercial y tecnología"
-				>
-					<TechSection />
-					<RoleTabs client:visible />
-				</section>
-			</div>
+		<section
+			class="section-snap-panel flex min-h-[100dvh] snap-start snap-always flex-col bg-white transition-theme-colors dark:bg-[#262D33]"
+			aria-label="Ciclo comercial y tecnología"
+		>
+			<TechSection />
+			<RoleTabs client:visible />
+		</section>
 
-			<div
-				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
-			>
-				<Roadmap />
-			</div>
+		<Roadmap />
 
-			<div
-				data-page-slide
-				class="h-[100dvh] shrink-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-pt-20 transition-theme-colors"
-			>
-				<section
-					class="flex min-h-[100dvh] flex-col justify-between bg-[#f8fafc] transition-theme-colors dark:bg-[#262D33]"
-					aria-label="Contacto y pie de página"
-				>
-					<div class="flex flex-1 flex-col justify-center px-0 py-6 sm:py-8">
-						<CtaSection />
-					</div>
-					<Footer />
-				</section>
+		<section
+			class="section-snap-panel flex min-h-[100dvh] snap-start snap-always flex-col justify-between bg-[#f8fafc] transition-theme-colors dark:bg-[#262D33]"
+			aria-label="Contacto y pie de página"
+		>
+			<div class="flex min-h-0 flex-1 flex-col justify-center px-0 py-6 sm:py-8">
+				<CtaSection />
 			</div>
-		</div>
+			<Footer />
+		</section>
 	</main>
 </Layout>
-
-<script>
-	import '../scripts/section-slider.ts';
-</script>
