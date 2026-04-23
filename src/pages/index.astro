@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import TrustBanner from '../components/TrustBanner.astro';
 import FeatureBento from '../components/react/FeatureBento.tsx';
-import RoleTabs from '../components/react/RoleTabs.tsx';
+import RoleTabs from '../components/RoleTabs.astro';
 import TechSection from '../components/TechSection.astro';
 import Roadmap from '../components/Roadmap.astro';
 import CtaSection from '../components/CtaSection.astro';
@@ -35,7 +35,7 @@ import Footer from '../components/Footer.astro';
 			aria-label="Ciclo comercial y tecnología"
 		>
 			<TechSection />
-			<RoleTabs client:visible />
+			<RoleTabs />
 		</section>
 
 		<Roadmap />

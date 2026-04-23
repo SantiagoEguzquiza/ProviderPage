@@ -82,57 +82,52 @@ export const features = {
 
 export const roles = {
 	id: 'para-quien',
+	badge: 'Ciclo comercial',
 	title: 'Todo el ciclo comercial en una sola app',
+	subtitle:
+		'Centraliza ventas, inventario y relaciones con clientes en una plataforma móvil unificada, pensada para equipos de campo y crecimiento operativo.',
 	tabs: [
 		{
 			id: 'clientes',
-			label: 'Gestión de Clientes',
+			label: 'Gestión de clientes',
+			image: '/screenshots/gestion_clientes.png',
 			description:
 				'Registra nuevos clientes, actualiza su información de contacto y organiza tu cartera para optimizar las rutas y visitas en campo.',
-			mockupHeaderText: 'Provider Clientes',
-			// Colocar `gestion_clientes.png` en `public/` y asignar a `screenshot` cuando quieras mostrarlo.
-			// screenshot: '/gestion_clientes.png',
-			screenshot: null as string | null,
 		},
 		{
 			id: 'productos',
-			label: 'Gestión de Productos',
+			label: 'Gestión de productos',
+			image: '/screenshots/gestion_productos.png',
 			description:
 				'Mantén el catálogo actualizado, precios, códigos y variantes, con stock y disponibilidad clara para tu equipo en ruta.',
-			mockupHeaderText: 'Provider Productos',
-			screenshot: null as string | null,
 		},
 		{
 			id: 'cuenta-corriente',
 			label: 'Cuenta Corriente',
+			image: '/screenshots/cuenta_corriente.png',
 			description:
 				'Consulta saldos, comprobantes y movimientos con el cliente, con historial claro y seguimiento de lo pendiente.',
-			mockupHeaderText: 'Provider Cuenta corriente',
-			screenshot: null as string | null,
 		},
 		{
 			id: 'ventas',
-			label: 'Gestión de Ventas',
+			label: 'Gestión de ventas',
+			image: '/screenshots/gestion_ventas.png',
 			description:
 				'Crea pedidos de forma ágil, selecciona productos, aplica listas y calcula totales frente al cliente, incluso en modo offline.',
-			mockupHeaderText: 'Provider Ventas',
-			screenshot: null as string | null,
 		},
 		{
 			id: 'compras',
-			label: 'Gestión de Compras',
+			label: 'Gestión de compras',
+			image: '/screenshots/gestion_compras.png',
 			description:
 				'Registra pedidos a proveedores, condiciones y recepciones para alinear abastecimiento con lo que vende tu equipo en campo.',
-			mockupHeaderText: 'Provider Compras',
-			screenshot: null as string | null,
 		},
 		{
 			id: 'cotizaciones',
 			label: 'Cotizaciones',
+			image: '/screenshots/cotizaciones.png',
 			description:
 				'Arma presupuestos con el tipo de cambio y listas al día, y compártelos con el cliente para acelerar el cierre comercial.',
-			mockupHeaderText: 'Provider Cotizaciones',
-			screenshot: null as string | null,
 		},
 	],
 } as const;

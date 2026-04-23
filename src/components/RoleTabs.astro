@@ -1,0 +1,206 @@
+---
+import { roles } from '../data/site';
+
+const tabIds = roles.tabs.map((t) => t.id);
+const imageUrls = roles.tabs.map((t) => t.image);
+const alts = roles.tabs.map((t) => `Vista de la app: ${t.label}`);
+const descriptions = roles.tabs.map((t) => t.description);
+const first = roles.tabs[0]!;
+
+const tabInactiveClass =
+	'w-full text-left rounded-xl border-l-4 border-transparent px-4 py-3.5 text-sm font-medium text-[#64748b] transition-[background-color,box-shadow,border-color,color] duration-200 dark:text-[#94a3b8] hover:bg-white/90 dark:hover:bg-[#323a42]/80';
+
+const tabActiveClass =
+	'w-full text-left rounded-xl border-l-4 border-[#1cb5ac] bg-gradient-to-r from-[#1cb5ac]/[0.12] to-transparent px-4 py-3.5 text-sm font-semibold text-[#154d6c] shadow-sm transition-[background-color,box-shadow,border-color,color] duration-200 dark:from-[#1cb5ac]/[0.18] dark:to-transparent dark:text-[#f8fafc]';
+---
+
+<section
+	id={roles.id}
+	class="section-snap-panel relative min-h-0 w-full min-w-0 flex-1 overflow-x-hidden border-t border-[#154d6c]/10 py-6 transition-theme-colors sm:py-8 md:py-10 dark:border-[#f8fafc]/10"
+	aria-labelledby="roles-title"
+>
+	<div
+		class="pointer-events-none absolute right-0 top-1/4 h-[min(50vw,360px)] w-[min(50vw,360px)] translate-x-1/3 rounded-full bg-[#1cb5ac]/10 blur-[90px] dark:bg-[#1cb5ac]/12"
+		aria-hidden="true"
+	>
+	</div>
+	<div
+		class="pointer-events-none absolute bottom-0 left-0 h-[min(45vw,320px)] w-[min(45vw,320px)] -translate-x-1/4 rounded-full bg-[#154d6c]/8 blur-[80px] dark:bg-[#154d6c]/10"
+		aria-hidden="true"
+	>
+	</div>
+
+	<div class="relative mx-auto max-w-6xl min-h-0 px-4 sm:px-6 lg:px-8" data-scroll-reveal>
+		<header class="mx-auto max-w-2xl text-center">
+			<p
+				class="mb-3 inline-flex items-center justify-center rounded-full border border-[#1cb5ac]/30 bg-[#1cb5ac]/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0f3d4f] dark:border-[#1cb5ac]/25 dark:bg-[#1cb5ac]/10 dark:text-[#94a3b8]"
+			>
+				{roles.badge}
+			</p>
+			<h2
+				id="roles-title"
+				class="text-gradient-section text-2xl font-semibold tracking-tight text-balance sm:text-3xl md:text-4xl"
+			>
+				{roles.title}
+			</h2>
+			<p
+				class="mt-3 text-sm leading-relaxed text-[#64748b] transition-theme-colors sm:mt-4 sm:text-base dark:text-[#94a3b8]"
+			>
+				{roles.subtitle}
+			</p>
+		</header>
+
+		<div
+			class="mt-8 grid min-h-0 w-full min-w-0 grid-cols-1 gap-8 lg:mt-10 lg:grid-cols-2 lg:items-start lg:gap-10 xl:gap-12"
+		>
+			<nav
+				aria-label="Módulos del ciclo comercial"
+				class="min-w-0 rounded-2xl border border-[#154d6c]/10 bg-white/80 p-2 shadow-[0_1px_3px_rgba(15,61,79,0.06),0_8px_32px_-12px_rgba(15,61,79,0.12)] ring-1 ring-black/[0.02] backdrop-blur-sm dark:border-[#f8fafc]/10 dark:bg-[#2a3239]/80 dark:shadow-[0_8px_32px_-12px_rgba(0,0,0,0.35)] dark:ring-white/[0.04]"
+			>
+				<div role="tablist" class="flex flex-col gap-1" aria-orientation="vertical">
+					{
+						roles.tabs.map((tab, i) => {
+							const selected = i === 0;
+							return (
+								<button
+									type="button"
+									role="tab"
+									data-cycle-tab
+									data-tab-index={i}
+									id={`role-tab-${tab.id}`}
+									aria-selected={selected}
+									aria-controls="role-mockup-panel"
+									tabindex={selected ? 0 : -1}
+									class={selected ? tabActiveClass : tabInactiveClass}
+								>
+									{tab.label}
+								</button>
+							);
+						})
+					}
+				</div>
+			</nav>
+
+			<div class="flex min-w-0 flex-col items-center justify-start gap-4 lg:items-stretch" data-cycle-right>
+				<div
+					class="relative w-full max-w-[min(100%,20rem)] sm:max-w-[22rem] lg:ml-auto lg:max-w-full lg:pr-2"
+				>
+					<div
+						class="relative mx-auto flex justify-center [filter:drop-shadow(0_20px_45px_rgba(28,181,172,0.22))] [transition:filter_0.3s_ease] dark:[filter:drop-shadow(0_24px_50px_rgba(28,181,172,0.16))] lg:mx-0"
+					>
+						<div
+							id="role-mockup-panel"
+							role="tabpanel"
+							class="w-full"
+							aria-labelledby={`role-tab-${first.id}`}
+						>
+							<img
+								data-cycle-mockup
+								class="h-auto w-full max-h-[min(60dvh,480px)] object-contain object-top opacity-100 transition-opacity duration-300 sm:max-h-[min(70dvh,520px)]"
+								src={first.image}
+								alt={alts[0]}
+								loading="eager"
+								decoding="async"
+								fetchpriority="high"
+								draggable="false"
+							/>
+						</div>
+					</div>
+				</div>
+				<p
+					data-cycle-desc
+					class="max-w-prose text-center text-sm leading-relaxed text-[#64748b] transition-theme-colors dark:text-[#94a3b8] lg:text-left"
+				>
+					{first.description}
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script
+	define:vars={{
+		sectionId: roles.id,
+		imageUrls,
+		alts,
+		descriptions,
+		tabIds,
+		tabActiveClass,
+		tabInactiveClass,
+	}}
+>
+	(function initCycleSection() {
+		var root = document.getElementById(sectionId);
+		if (!root) return;
+
+		var tabs = root.querySelectorAll('[data-cycle-tab]');
+		var img = root.querySelector('[data-cycle-mockup]');
+		var desc = root.querySelector('[data-cycle-desc]');
+		var panel = root.querySelector('#role-mockup-panel');
+		if (!(img instanceof HTMLImageElement)) return;
+
+		var active = 0;
+		var fading = false;
+
+		imageUrls.forEach(function (src) {
+			var p = new Image();
+			p.src = src;
+		});
+
+		function setTabClasses(i) {
+			for (var t = 0; t < tabs.length; t++) {
+				var btn = tabs[t];
+				if (!(btn instanceof HTMLButtonElement)) continue;
+				if (t === i) {
+					btn.className = tabActiveClass;
+					btn.setAttribute('aria-selected', 'true');
+					btn.tabIndex = 0;
+				} else {
+					btn.className = tabInactiveClass;
+					btn.setAttribute('aria-selected', 'false');
+					btn.tabIndex = -1;
+				}
+			}
+		}
+
+		function apply(i) {
+			if (fading || i === active) return;
+			if (i < 0 || i >= imageUrls.length) return;
+			fading = true;
+			active = i;
+			setTabClasses(i);
+			if (desc && descriptions[i] !== undefined) {
+				desc.textContent = descriptions[i] ?? '';
+			}
+			if (panel) {
+				panel.setAttribute('aria-labelledby', 'role-tab-' + (tabIds[i] ?? ''));
+			}
+			img.classList.add('opacity-0');
+			window.setTimeout(function () {
+				var doneOnce = false;
+				function onDone() {
+					if (doneOnce) return;
+					doneOnce = true;
+					img.onload = null;
+					img.onerror = null;
+					requestAnimationFrame(function () {
+						img.classList.remove('opacity-0');
+						fading = false;
+					});
+				}
+				img.setAttribute('src', imageUrls[i] ?? '');
+				img.setAttribute('alt', alts[i] ?? '');
+				img.onload = onDone;
+				img.onerror = onDone;
+			}, 300);
+		}
+
+		for (var k = 0; k < tabs.length; k++) {
+			(function (index) {
+				tabs[k]?.addEventListener('click', function () {
+					apply(index);
+				});
+			})(k);
+		}
+	})();
+</script>
