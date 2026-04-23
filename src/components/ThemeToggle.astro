@@ -5,7 +5,7 @@ const THEME_STORAGE_KEY = 'provider-theme';
 <button
 	type="button"
 	id="theme-toggle"
-	class="group relative inline-flex h-9 w-14 shrink-0 cursor-pointer items-center rounded-full border border-[#154d6c]/15 bg-[#e2e8f0] p-0.5 shadow-inner transition-theme-switch focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1cb5ac] dark:border-[#1cb5ac]/40 dark:bg-[#1cb5ac] dark:shadow-[inset_0_1px_3px_rgb(0_0_0/0.2)]"
+	class="group relative inline-flex h-9 w-14 shrink-0 cursor-pointer items-center rounded-full border border-[#154d6c]/15 bg-[#e2e8f0] p-0.5 shadow-inner transition-[background-color,border-color,box-shadow] duration-300 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1cb5ac] dark:border-[#1cb5ac]/40 dark:bg-[#1cb5ac] dark:shadow-[inset_0_1px_3px_rgb(0_0_0/0.2)]"
 	aria-label="Cambiar tema claro u oscuro"
 	aria-pressed="false"
 	data-theme-key={THEME_STORAGE_KEY}
@@ -15,7 +15,7 @@ const THEME_STORAGE_KEY = 'provider-theme';
 	>
 		<!-- Sun (light mode) -->
 		<svg
-			class="absolute size-3.5 text-amber-500 opacity-100 transition-theme-opacity dark:opacity-0"
+			class="absolute size-3.5 text-amber-500 opacity-100 transition-opacity duration-300 ease-in-out dark:opacity-0"
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
 			height="24"
@@ -32,7 +32,7 @@ const THEME_STORAGE_KEY = 'provider-theme';
 		</svg>
 		<!-- Moon (dark mode) -->
 		<svg
-			class="absolute size-3.5 text-[#154d6c] opacity-0 transition-theme-opacity dark:opacity-100 dark:text-[#0f172a]"
+			class="absolute size-3.5 text-[#154d6c] opacity-0 transition-opacity duration-300 ease-in-out dark:opacity-100 dark:text-[#0f172a]"
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
 			height="24"

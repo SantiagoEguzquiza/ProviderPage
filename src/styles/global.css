@@ -29,9 +29,6 @@
 	--radius-2xl: 1.25rem;
 	--radius-3xl: 1.5rem;
 
-	/* Light/dark: top-to-bottom stagger uses --stagger; duration/ease are shared */
-	--theme-transition-duration: 500ms;
-	--theme-transition-timing: ease-in-out;
 	--stagger: 0ms;
 }
 
@@ -39,18 +36,11 @@
 	html {
 		--stagger: 0ms;
 		scroll-behavior: smooth;
-		transition:
-			color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			background-color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			border-color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms);
 	}
 
 	body {
 		scroll-behavior: smooth;
 		@apply bg-[#F8FAFC] antialiased font-sans text-[#64748B] dark:bg-[#262D33] dark:text-[#94A3B8];
-		transition:
-			background-color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms);
 	}
 
 	/* Primary scroll: full-height column (smooth scroll; section snap is JS on md+) */
@@ -69,9 +59,6 @@
 	h4 {
 		font-family: var(--font-display);
 		@apply text-[#154D6C] dark:text-[#F8FAFC];
-		transition:
-			color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			background-color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms);
 	}
 
 	::selection {
@@ -102,12 +89,9 @@
 		contain-intrinsic-size: 300px 640px;
 	}
 
-	/* Light/dark cross-fade: opacity only, delay follows inherited --stagger */
+	/* Hero: snap light/dark screenshot swap (no cross-fade) */
 	.device-screenshot-fade {
-		transition-property: opacity;
-		transition-duration: var(--theme-transition-duration);
-		transition-timing-function: var(--theme-transition-timing);
-		transition-delay: var(--stagger, 0ms);
+		transition: none;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -122,52 +106,23 @@
 		backface-visibility: hidden;
 	}
 
-	/* Light/dark morph: delay syncs to nearest ancestor with --stagger (Tailwind delay-* on sections) */
-	.transition-theme-colors {
-		transition-property:
-			color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, box-shadow, backdrop-filter,
-			-webkit-backdrop-filter;
-		transition-duration: var(--theme-transition-duration);
-		transition-timing-function: var(--theme-transition-timing);
-		transition-delay: var(--stagger, 0ms);
-	}
-
-	.transition-theme-opacity {
-		transition-property: opacity;
-		transition-duration: var(--theme-transition-duration);
-		transition-timing-function: var(--theme-transition-timing);
-		transition-delay: var(--stagger, 0ms);
-	}
-
-	.transition-theme-switch {
-		transition-property: background-color, border-color, box-shadow;
-		transition-duration: var(--theme-transition-duration);
-		transition-timing-function: var(--theme-transition-timing);
-		transition-delay: var(--stagger, 0ms);
-	}
-
+	/* Kept in markup; theme (light/dark) has no color motion — use ThemeToggle for animated feedback */
+	.transition-theme-colors,
+	.transition-theme-opacity,
+	.transition-theme-switch,
 	.transition-theme-transform {
-		transition-property: transform;
-		transition-duration: var(--theme-transition-duration);
-		transition-timing-function: var(--theme-transition-timing);
-		transition-delay: var(--stagger, 0ms);
+		transition: none;
 	}
 
 	.feature-bento-card {
 		transition:
 			transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
-			box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
-			background-color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			border-color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			ring-color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms);
+			box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
 	.text-gradient-hero {
 		@apply bg-gradient-to-br from-[#154d6c] via-[#1a5f72] to-[#1cb5ac] bg-clip-text text-transparent;
-		transition:
-			color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			background var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			background-image var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms);
+		transition: none;
 	}
 
 	html.dark .text-gradient-hero {
@@ -176,10 +131,7 @@
 
 	.text-gradient-section {
 		@apply bg-gradient-to-br from-[#154d6c] via-[#174a63] to-[#1cb5ac] bg-clip-text text-transparent;
-		transition:
-			color var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			background var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms),
-			background-image var(--theme-transition-duration) var(--theme-transition-timing) var(--stagger, 0ms);
+		transition: none;
 	}
 
 	html.dark .text-gradient-section {
@@ -236,7 +188,6 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		:root {
-			--theme-transition-duration: 0.01ms;
 			--stagger: 0ms;
 		}
 

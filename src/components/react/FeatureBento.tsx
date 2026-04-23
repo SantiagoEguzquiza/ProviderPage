@@ -23,7 +23,7 @@ export default function FeatureBento() {
 		<section
 			id={features.id}
 			aria-labelledby="features-heading"
-			className="section-snap-panel relative flex min-h-[100dvh] w-full flex-col overflow-x-hidden border-t border-[#154d6c]/10 bg-[#f8fafc] py-12 transition-theme-colors delay-150 ease-in-out duration-500 sm:py-24 dark:border-[#f8fafc]/10 dark:bg-[#262D33] [--stagger:150ms]"
+			className="section-snap-panel relative flex min-h-[100dvh] w-full flex-col overflow-x-hidden border-t border-[#154d6c]/10 bg-[#f8fafc] py-12 transition-theme-colors sm:py-24 dark:border-[#f8fafc]/10 dark:bg-[#262D33]"
 		>
 			<div
 				className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgb(28_181_172/0.12),transparent)]"
